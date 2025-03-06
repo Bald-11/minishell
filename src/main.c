@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/06 14:01:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:10:52 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(void)
 			break ;
 		else if (!strcmp(prompt, "pwd"))
 			printf("%s\n", getcwd(buf, 0));
+		/* else if (!strcmp(prompt, "cd .."))
+			chdir(".."); */ // testing
 		free(prompt);
 	}
 	free(prompt);
