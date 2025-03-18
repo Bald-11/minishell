@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/06 14:10:52 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:58:04 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 int	main(void)
 {
-	char	*prompt;
-	char	*buf;
-	buf = NULL;
+	char	*input;
+
 	while (1)
 	{
-		prompt = readline("$ ");
-		if (!strcmp(prompt, "exit"))
-			break ;
-		else if (!strcmp(prompt, "pwd"))
-			printf("%s\n", getcwd(buf, 0));
-		/* else if (!strcmp(prompt, "cd .."))
-			chdir(".."); */ // testing
-		free(prompt);
+		input = readline("$ ");
+		if (!input)
+			return (printf("exit\n"), 0);
+		if (strlen(input) > 0)
+			add_history(input);
+		// process command
+		free(input);
 	}
-	free(prompt);
 	return (0);
 }
