@@ -12,7 +12,7 @@ BLUE = \033[34m
 MAGENTA = \033[35m
 CYAN = \033[36m
 
-SRC_FILES = main.c
+SRC_FILES = main.c input.c utils.c utils2.c tokens.c tokenizer.c tokenizer2.c
 SRC = $(addprefix src/, $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
