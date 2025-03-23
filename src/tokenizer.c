@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 21:18:20 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:42:24 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	double_q_env_expand(char **current, char **result, char *close_quote)
 {
-	char *(var_name), var_value, old_res;
+	char *(var_name), *(var_value), *(old_res);
 	int (var_len);
 	var_len = 0;
 	(*current)++;

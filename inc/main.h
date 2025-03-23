@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 21:07:47 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:17:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_command
+typedef struct s_cmd
 {
 	char				**args;
 	char				*input_file;
 	char				*output_file;
 	int					append_mode;
 	char				*heredoc_delim;
-	struct s_command	*next;
-}	t_command;
+	struct s_cmd	*next;
+}	t_cmd;
 
 void	shell_loop(void);
 void	free_tokens(t_token *tokens);
