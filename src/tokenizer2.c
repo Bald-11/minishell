@@ -6,95 +6,84 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:01:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 21:19:20 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:44:36 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-void	tokenize_redirects(t_token **head, char **input)
+void	append_char(char **str, char c)
 {
-	if (**(input + 1))
-	{
-		if (**(input + 1) == '>' || **(input + 1) == '<')
-		{
-			if (**input == '>')
-				add_token(head, create_token(T_APPEND, ">>"));
-			else if (**input == '<')
-				add_token(head, create_token(T_HEREDOC, "<<"));
-			(*input)++;
-		}
-		else
-		{
-			if (**input == '>')
-				add_token(head, create_token(T_REDIR_OUT, ">"));
-			else if (**input == '<')
-				add_token(head, create_token(T_REDIR_IN, "<"));
-		}
-	}
-	else
-	{
-		if (**input == '>')
-			add_token(head, create_token(T_REDIR_OUT, ">"));
-		else if (**input == '<')
-			add_token(head, create_token(T_REDIR_IN, "<"));
-	}
+	char *(new);
+	int (len);
+	len = ft_strlen(*str);
+	new = (char *)malloc(len + 2);
+	ft_strcpy(new, *str);
+	new[len] = c;
+	new[len + 1] = '\0';
+	free(*str);
+	*str = new;
 }
 
-void	expand_env_var(t_token **head, char *arg)
+void	append_string(char **str, char *append)
 {
-	char	*env_var;
+	char *(new);
+	new = (char *)malloc(ft_strlen(*str) + ft_strlen(append) + 1);
+	ft_strcpy(new, *str);
+	ft_strcat(new, append);
+	free(*str);
+	*str = new;
+}
 
-	env_var = getenv(arg);
-	if (!env_var)
-		add_token(head, create_token(T_ARG, ""));
+void	env_var_handle(char **input, char **result)
+{
+	(*input)++;
+	int (i);
+	char *(var_name), *(value);
+	var_name = (char *)malloc(1);
+	if (!var_name)
+		return ;
+	var_name[0] = '\0';
+	i = 0;
+	while (ft_isalnum((*input)[i]))
+		append_char(&var_name, (*input)[i++]);
+	if (var_name[0] != '\0')
+	{
+		value = getenv(var_name);
+		if (value)
+			append_string(result, value);
+	}
 	else
-		add_token(head, create_token(T_ARG, env_var));
+		append_char(result, '$');
+	free(var_name);
+	*input += i;
 }
 
 int	tokenize_else(t_token **head, char **input)
 {
-	int (len), is_env_v = 0;
-	char *(token);
-	if (**input == '$')
-	{
-		(*input)++;
-		is_env_v = 1;
-	}
-	len = word_len(*input);
-	token = (char *)malloc(sizeof(char) * (len + 1));
-	if (!token)
-	{
-		if (*head)
-			free_tokens(*head);
+	char *(result);
+	result = malloc(1);
+	if (!result)
 		return (0);
-	}
-	ft_strncpy(token, *input, len + 1);
-	if (is_env_v)
-		expand_env_var(head, token);
-	else
-		add_token(head, create_token(T_ARG, token));
-	free(token);
-	*input += len - 1;
-	return (1);
-}
-
-int	single_quote_handle(t_token **head, char **input, char quote)
-{
-	int		len;
-	char	*temp;
-
-	len = ft_strchr(*input, quote) - *input;
-	temp = malloc(len + 1);
-	if (!temp)
+	result[0] = '\0';
+	while (**input && !ft_isspace(**input) && **input != '|'
+		&& **input != '>' && **input != '<')
 	{
-		if (*head)
-			free_tokens(*head);
-		return (0);
+		if (**input == '\'')
+			single_quote_handle(input, &result);
+		else if (**input == '"')
+			double_quote_handle(input, &result);
+		else if (**input == '$')
+			env_var_handle(input, &result);
+		else
+		{
+			append_char(&result, **input);
+			(*input)++;
+		}
 	}
-	ft_strncpy(temp, *input, len + 1);
-	add_token(head, create_token(T_ARG, temp));
-	free(temp);
-	*input += len;
+	if (result[0] != '\0')
+		add_token(head, create_token(T_ARG, result));
+	free(result);
+	(*input)--;
 	return (1);
 }

@@ -6,54 +6,84 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:31:29 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/23 16:46:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:58:08 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-t_cmd *parse_tokens(t_token *tokens)
+t_cmd	*finalize_cmds(t_cmd *cmd, t_cmd **head)
 {
-    t_cmd *cmd_head = NULL;
-    t_cmd *current_cmd = NULL;
-    int arg_index = 0;
-    
-    // Loop through tokens and build command structures
-    while (tokens && tokens->type != T_EOF)
-    {
-        // Start a new command if needed
-        if (!current_cmd) {
-            current_cmd = create_command();
-            if (!current_cmd)
-                return NULL;
-            // Link to list or set as head
-        }
-        
-        // Handle different token types
-        if (tokens->type == T_ARG) {
-            // Add as command or argument
-        }
-        else if (tokens->type == T_PIPE) 
-        {
-            if (!token->next || token->next->type == T_PIPE || token->next->type == T_EOF) {
-                return (printf("minishell: syntax error: unexpected token `|'\n"), NULL);
-            }
-            
-            // Check if this is the first token (no command before pipe)
-            if (first_token) {
-                return (printf("minishell: syntax error near unexpected token `|'\n"), NULL);
-            }
-            // Finalize current command, prepare for next
-        }
-        else if (tokens->type == T_REDIR_OUT || tokens->type == T_APPEND) {
-            // Handle output redirection
-        }
-        else if (tokens->type == T_REDIR_IN || tokens->type == T_HEREDOC) {
-            // Handle input redirection
-        }
-        
-        tokens = tokens->next;
-    }
-    
-    return cmd_head;
+	if (cmd)
+		add_cmd(cmd, head);
+	return (*head);
+}
+
+int	handle_arg_token(t_cmd *cmd, char *value, t_cmd **head)
+{
+	if (!add_arg_to_cmd(cmd, value))
+	{
+		if (*head)
+			free_cmds(*head);
+		return (0);
+	}
+	return (1);
+}
+
+t_cmd	*handle_pipe_token(t_token *token, t_cmd *cmd, t_cmd **head)
+{
+	if (!token->next || token->next->type != T_ARG)
+	{
+		printf("minishell: syntax error\n");
+		if (*head)
+			free_cmds(*head);
+		return (NULL);
+	}
+	add_cmd(cmd, head);
+	return (init_cmd(head));
+}
+
+int	process_token(t_token **token_og, t_cmd **cmd, t_cmd **head)
+{
+	t_token *(token);
+	int (result);
+	token = *token_og;
+	if (token->type == T_ARG)
+		return (handle_arg_token(*cmd, token->value, head));
+	else if (token->type == T_PIPE)
+	{
+		*cmd = handle_pipe_token(token, *cmd, head);
+		return (*cmd != NULL);
+	}
+	else if (token->type == T_REDIR_OUT || token->type == T_APPEND
+		|| token->type == T_REDIR_IN || token->type == T_HEREDOC)
+	{
+		result = handle_redirection(*cmd, token, head);
+		if (result)
+			*token_og = token->next;
+		return (result);
+	}
+	return (1);
+}
+
+t_cmd	*parse_tokens(t_token *tokens)
+{
+	t_cmd *(head), *(cmd);
+	head = NULL;
+	cmd = NULL;
+	if (tokens && tokens->type == T_PIPE)
+		return (printf("minishell: syntax error\n"), NULL);
+	while (tokens && tokens->type != T_EOF)
+	{
+		if (!cmd)
+		{
+			cmd = init_cmd(&head);
+			if (!cmd)
+				return (NULL);
+		}
+		if (!process_token(&tokens, &cmd, &head))
+			return (NULL);
+		tokens = tokens->next;
+	}
+	return (finalize_cmds(cmd, &head));
 }

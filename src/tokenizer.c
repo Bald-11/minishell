@@ -6,120 +6,107 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 21:42:24 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:37:46 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-int	double_q_env_expand(char **current, char **result, char *close_quote)
+int	quote_check(char *input)
 {
-	char *(var_name), *(var_value), *(old_res);
-	int (var_len);
-	var_len = 0;
-	(*current)++;
-	while ((*current + var_len) < close_quote && (isalnum((*current)[var_len])
-		|| (*current)[var_len] == '_'))
-		var_len++;
-	var_name = malloc(var_len + 1);
-	if (!var_name)
-		return (free(*result), 0);
-	ft_strncpy(var_name, *current, var_len + 1);
-	var_value = getenv(var_name);
-	if (var_value)
+	int (squote), dquote = 0;
+	squote = 0;
+	while (*input)
 	{
-		old_res = *result;
-		*result = ft_strjoin(old_res, var_value);
-		free(old_res);
-		if (!*result)
-			return (0);
+		if (*input == '\'' && !dquote)
+			squote = !squote;
+		else if (*input == '"' && !squote)
+			dquote = !dquote;
+		input++;
 	}
-	free(var_name);
-	*current += var_len;
+	if (squote || dquote)
+		return (printf("minishell: syntax error: unclosed quote\n"), 0);
 	return (1);
 }
 
-int	in_quote_loop(char **current, char **result, char *close_quote)
+void	tokenize_redirects(t_token **head, char **input)
 {
-	char	temp[2];
-
-	char *(old_res);
-	if (**current == '$')
+	if (*(*input + 1))
 	{
-		if (!double_q_env_expand(current, result, close_quote))
-			return (0);
+		if (*(*input + 1) == '>' || *(*input + 1) == '<')
+		{
+			if (**input == '>')
+				add_token(head, create_token(T_APPEND, ">>"));
+			else if (**input == '<')
+				add_token(head, create_token(T_HEREDOC, "<<"));
+			(*input)++;
+		}
+		else
+		{
+			if (**input == '>')
+				add_token(head, create_token(T_REDIR_OUT, ">"));
+			else if (**input == '<')
+				add_token(head, create_token(T_REDIR_IN, "<"));
+		}
 	}
 	else
 	{
-		temp[0] = **current;
-		temp[1] = '\0';
-		old_res = *result;
-		*result = ft_strjoin(old_res, temp);
-		free(old_res);
-		if (!*result)
-			return (0);
-		(*current)++;
+		if (**input == '>')
+			add_token(head, create_token(T_REDIR_OUT, ">"));
+		else if (**input == '<')
+			add_token(head, create_token(T_REDIR_IN, "<"));
 	}
-	return (1);
 }
 
-int	double_quote_handle(t_token **head, char **input, char quote)
+void	single_quote_handle(char **input, char **result)
 {
-	char *(close_quote), *result, *current;
-	close_quote = ft_strchr(*input, quote);
-	result = malloc(1);
-	if (!result)
+	char *(end);
+	int (len), i = 0;
+	(*input)++;
+	end = ft_strchr(*input, '\'');
+	if (!end)
 	{
-		if (*head)
-			free_tokens(*head);
-		return (0);
+		(*input) += ft_strlen(*input);
+		return ;
 	}
-	result[0] = '\0';
-	current = *input;
-	while (current < close_quote)
+	len = end - *input;
+	while (i++ < len)
 	{
-		if (!in_quote_loop(&current, &result, close_quote))
+		append_char(result, **input);
+		(*input)++;
+	}
+	(*input)++;
+}
+
+void	double_quote_handle(char **input, char **result)
+{
+	char *(end);
+	(*input)++;
+	end = ft_strchr(*input, '"');
+	if (!end)
+	{
+		(*input) += ft_strlen(*input);
+		return ;
+	}
+	while (*input < end)
+	{
+		if (**input == '$')
+			env_var_handle(input, result);
+		else
 		{
-			if (*head)
-				free_tokens(*head);
-			return (0);
+			append_char(result, **input);
+			(*input)++;
 		}
 	}
-	add_token(head, create_token(T_ARG, result));
-	*input = close_quote;
-	return (free(result), 1);
-}
-
-int	tokenize_quotes(t_token **head, char **input)
-{
-	char	quote;
-
-	quote = **input;
 	(*input)++;
-	if (!ft_strchr(*input, quote))
-	{
-		if (*head)
-			free_tokens(*head);
-		return (printf("minishell: syntax error: unclosed quote\n"), 0);
-	}
-	if (quote == '\'')
-	{
-		if (!single_quote_handle(head, input, quote))
-			return (0);
-	}
-	else if (quote == '"')
-	{
-		if (!double_quote_handle(head, input, quote))
-			return (0);
-	}
-	return (1);
 }
 
 t_token	*tokenize_input(char *input)
 {
-	t_token	*head;
-
+	t_token *(head);
 	head = NULL;
+	if (!quote_check(input))
+		return (NULL);
 	while (*input)
 	{
 		skip_whites(&input);
@@ -127,11 +114,6 @@ t_token	*tokenize_input(char *input)
 			add_token(&head, create_token(T_PIPE, "|"));
 		else if (*input == '>' || *input == '<')
 			tokenize_redirects(&head, &input);
-		else if (*input == '"' || *input == '\'')
-		{
-			if (!tokenize_quotes(&head, &input))
-				return (NULL);
-		}
 		else
 		{
 			if (!tokenize_else(&head, &input))

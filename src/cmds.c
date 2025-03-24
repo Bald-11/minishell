@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 13:42:53 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/23 14:18:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:55:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,57 +15,68 @@
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd *(temp);
+	t_redir *(redir);
 	int (i);
 	while (cmd)
 	{
 		i = 0;
-		temp = cmd;
-		cmd = cmd->next;
-		while (temp->args)
-			free(temp->args[i++]);
-		free(temp->args);
-		free(temp->input_file);
-		free(temp->output_file);
-		free(temp->heredoc_delim);
-		free(temp);
+		temp = cmd->next;
+		if (cmd->args)
+		{
+			while (cmd->args[i])
+				free(cmd->args[i++]);
+			free(cmd->args);
+		}
+		while (cmd->redir)
+		{
+			redir = cmd->redir;
+			cmd->redir = cmd->redir->next;
+			free(redir->file);
+			free(redir);
+		}
+		free(cmd);
+		cmd = temp;
 	}
 }
 
-t_cmd	*create_cmd(t_token_type type, char *value)
+t_cmd	*create_cmd(void)
 {
-	t_cmd	*cmd;
-
+	t_cmd *(cmd);
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	token->type = type;
-	token->value = strdup(value);
-	if (!token->value)
+	cmd->args = malloc(sizeof(char *));
+	if (!cmd->args)
 	{
-		free(token);
+		free(cmd);
 		return (NULL);
 	}
-	token->next = NULL;
-	return (token);
+	cmd->args[0] = NULL;
+	cmd->redir = NULL;
+	cmd->next = NULL;
+	return (cmd);
 }
 
-void	add_token(t_token **head, t_token *new_token)
+int	add_arg_to_cmd(t_cmd *cmd, char *arg)
 {
-	t_token	*current;
-
-	if (!new_token)
+	int (i), j = -1;
+	char **(new_args);
+	i = 0;
+	while (cmd->args && cmd->args[i])
+		i++;
+	new_args = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_args)
+		return (0);
+	while (cmd->args && ++j < i)
+		new_args[j] = cmd->args[j];
+	new_args[i] = ft_strdup(arg);
+	if (!new_args[i])
 	{
-		if (*head)
-			free_tokens(*head);
-		return ;
+		free(new_args);
+		return (0);
 	}
-	if (!*head)
-	{
-		*head = new_token;
-		return ;
-	}
-	current = *head;
-	while (current->next)
-		current = current->next;
-	current->next = new_token;
+	new_args[i + 1] = NULL;
+	free(cmd->args);
+	cmd->args = new_args;
+	return (1);
 }

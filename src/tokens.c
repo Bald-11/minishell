@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:20 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 18:59:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:43:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token	*create_token(t_token_type type, char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	token->value = strdup(value);
+	token->value = ft_strdup(value);
 	if (!token->value)
 	{
 		free(token);

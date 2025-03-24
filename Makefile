@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFLAGS = -lreadline -lhistory
 
 RESET = \033[0m
@@ -12,7 +12,7 @@ BLUE = \033[34m
 MAGENTA = \033[35m
 CYAN = \033[36m
 
-SRC_FILES = main.c input.c utils.c utils2.c tokens.c tokenizer.c tokenizer2.c
+SRC_FILES = main.c input.c utils.c utils2.c utils3.c tokens.c tokenizer.c tokenizer2.c parser.c parser2.c redir.c cmds.c
 SRC = $(addprefix src/, $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
