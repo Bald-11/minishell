@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:01:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/24 20:44:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:38:18 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ void	env_var_handle(char **input, char **result)
 	(*input)++;
 	int (i);
 	char *(var_name), *(value);
-	var_name = (char *)malloc(1);
+	var_name = ft_strdup("");
 	if (!var_name)
 		return ;
-	var_name[0] = '\0';
 	i = 0;
 	while (ft_isalnum((*input)[i]))
 		append_char(&var_name, (*input)[i++]);
-	if (var_name[0] != '\0')
+	if (var_name[0])
 	{
 		value = getenv(var_name);
 		if (value)
@@ -62,10 +61,9 @@ void	env_var_handle(char **input, char **result)
 int	tokenize_else(t_token **head, char **input)
 {
 	char *(result);
-	result = malloc(1);
+	result = ft_strdup("");
 	if (!result)
 		return (0);
-	result[0] = '\0';
 	while (**input && !ft_isspace(**input) && **input != '|'
 		&& **input != '>' && **input != '<')
 	{
@@ -81,7 +79,7 @@ int	tokenize_else(t_token **head, char **input)
 			(*input)++;
 		}
 	}
-	if (result[0] != '\0')
+	if (result[0])
 		add_token(head, create_token(T_ARG, result));
 	free(result);
 	(*input)--;

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:53:16 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/24 15:56:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:35:39 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ char	*ft_strdup(const char *s)
 	d = (char *)malloc((src_len + 1) * sizeof(char));
 	if (!d)
 		return (NULL);
-	while (i <= src_len)
+	while (i < src_len)
 	{
 		d[i] = s[i];
 		i++;
 	}
+	d[i] = '\0';
 	return (d);
 }
 

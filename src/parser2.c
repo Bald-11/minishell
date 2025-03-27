@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:39:18 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/24 20:52:53 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:21:28 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	handle_redirection(t_cmd *cmd, t_token *token, t_cmd **head)
 	{
 		if (*head)
 			free_cmds(*head);
+		if (cmd)
+			free_cmds(cmd);
 		return (printf("minishell: syntax error\n"), 0);
 	}
 	if (token->type == T_REDIR_OUT)

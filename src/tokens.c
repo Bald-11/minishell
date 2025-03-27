@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:20 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/24 11:43:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:55:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	add_token(t_token **head, t_token *new_token)
 	{
 		if (*head)
 			free_tokens(*head);
+		*head = NULL;
 		return ;
 	}
 	if (!*head)
