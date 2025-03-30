@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/24 20:53:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/30 20:30:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	tokenize_redirects(t_token **head, char **input);
 void	free_cmds(t_cmd *cmd);
 void	single_quote_handle(char **input, char **result);
 void	double_quote_handle(char **input, char **result);
-void	add_cmd(t_cmd *cmd, t_cmd **head);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result);
 
@@ -85,7 +84,7 @@ int		add_arg_to_cmd(t_cmd *cmd, char *arg);
 int		add_redir(t_cmd *cmd, t_redir_type type, char *file);
 int		ft_isalnum(int c);
 int		ft_isspace(int c);
-int		handle_redirection(t_cmd *cmd, t_token *token, t_cmd **head);
+int		handle_redirection(t_cmd *cmd, t_token *token);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -99,7 +98,7 @@ t_token	*create_token(t_token_type type, char *value);
 t_token	*tokenize_input(char *input);
 
 t_cmd	*create_cmd(void);
-t_cmd	*parse_tokens(t_token *tokens);
+t_cmd	*parse_tokens(t_token *token);
 t_cmd	*init_cmd(t_cmd **head);
 
 t_redir	*create_redir(t_redir_type type, char *file);

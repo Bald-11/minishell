@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:08:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/27 17:10:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/03/30 20:37:56 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,10 @@ void	shell_loop(void)
 		if (!input[0])
 			continue ;
 		tokens = tokenize_input(input);
-		// print_tokens(tokens);
 		free(input);
 		if (!tokens)
 			continue ;
 		cmds = parse_tokens(tokens);
-		// print_cmds(cmds);
 		free_tokens(tokens);
 		if (!cmds)
 			continue ;
