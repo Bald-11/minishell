@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:25:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 10:04:17 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:37:15 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ char	*ft_strjoin_ex(char const *s1, char const *s2)
 	dest[i] = '\0';
 	ft_strncat(dest, s2, s2_len + s1_len + 1);
 	return (dest);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

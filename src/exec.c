@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 08:22:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 10:05:54 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 11:48:26 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,34 @@ char	*filename(char *cmd)
 
 void	exec_c(t_cmd *cmd, char *envp[])
 {
-	if (execve(filename(cmd->args[0]), cmd->args, envp) == -1)
-		printf("minishell: command not found: %s\n", cmd->args[0]), exit(1);
+	if (isbuiltin(cmd->args[0]))
+	{
+		// do something here
+		printf("do something here\n"), exit(0);
+	}
+	else
+	{
+		if (execve(filename(cmd->args[0]), cmd->args, envp) == -1)
+			printf("minishell: command not found: %s\n", cmd->args[0]), exit(1);
+	}
+}
+
+void	exec_b(t_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->args[0], "saf"))
+		return ;
+	else if (!ft_strcmp(cmd->args[0], "cd"))
+		cd(cmd->args[1]);
+	else if (!ft_strcmp(cmd->args[0], "pwd"))
+		return ;
+	else if (!ft_strcmp(cmd->args[0], "export"))
+		return ;
+	else if (!ft_strcmp(cmd->args[0], "unset"))
+		return ;
+	else if (!ft_strcmp(cmd->args[0], "env"))
+		return ((void)1);
+	else if (!ft_strcmp(cmd->args[0], "exit"))
+		printf("exit\n"), exit(0);
 }
 
 int	exec_cmds(t_cmd *cmd, char *envp[])
@@ -63,8 +89,8 @@ int	exec_cmds(t_cmd *cmd, char *envp[])
 	int (cmd_count);//, i = 0;
 	pid_t (pid);
 	cmd_count = count_cmds(cmd);
-	if (cmd_count > 1)
-		return (0);
+	/* if (cmd_count > 1)
+		return (0); */
 	/* pid = (pid_t *)malloc(cmd_count * sizeof(pid_t));
 	if (!pid)
 		return (0); */
@@ -75,10 +101,18 @@ int	exec_cmds(t_cmd *cmd, char *envp[])
 		if (!pid[i])
 		i++;
 	} */
-	pid = fork();
-	if (!pid)
-		exec_c(cmd, envp);
-	waitpid(pid, 0, 0);
+	if (cmd_count == 1)
+	{
+		if (isbuiltin(cmd->args[0]))
+			exec_b(cmd);
+		else
+		{
+			pid = fork();
+			if (!pid)
+				exec_c(cmd, envp);
+			waitpid(pid, 0, 0);
+		}
+	}
 	// printf("CMD COUNT: %d\n", cmd_count);
 	return (0);
 }

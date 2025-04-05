@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 09:58:40 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 11:22:17 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	single_quote_handle(char **input, char **result);
 void	double_quote_handle(char **input, char **result);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result);
+void	cd(char *path);
 
 int		word_len(char *input);
 int		tokenize_else(t_token **head, char **input);
@@ -87,6 +88,8 @@ int		ft_isspace(int c);
 int		handle_redirection(t_cmd *cmd, t_token *token);
 int		exec_cmds(t_cmd *cmd, char *envp[]);
 int		ft_strchr_ex(const char *s, char c);
+int		ft_strcmp(char *s1, char *s2);
+int		isbuiltin(char *cmd);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
