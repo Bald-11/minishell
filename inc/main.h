@@ -40,6 +40,7 @@ typedef struct s_token
 {
 	t_token_type		type;
 	char				*value;
+	t_data				*data;
 	struct s_token		*next;
 }	t_token;
 
@@ -56,6 +57,7 @@ typedef struct s_redir
 	t_redir_type		type;
 	char				*file;
 	struct s_redir		*next;
+	t_data				*data;
 }	t_redir;
 
 typedef struct s_cmd
@@ -64,6 +66,12 @@ typedef struct s_cmd
 	t_redir				*redir;
 	struct s_cmd		*next;
 }	t_cmd;
+
+typedef struct s_data
+{
+	int					last_exit_status;
+	pid_t				*pid;
+}	t_data;
 
 void	shell_loop(char *envp[]);
 void	free_tokens(t_token *tokens);
@@ -89,7 +97,7 @@ int		handle_redirection(t_cmd *cmd, t_token *token);
 int		exec_cmds(t_cmd *cmd, char *envp[]);
 int		ft_strchr_ex(const char *s, char c);
 int		ft_strcmp(char *s1, char *s2);
-int		isbuiltin(char *cmd);
+int		isbuiltin(char *cmd, char **args, char **envp);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
