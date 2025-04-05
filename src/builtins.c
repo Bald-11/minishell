@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 10:31:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 11:48:18 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:12:34 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cd(char *path)
 {
 	if (chdir(path) == -1)
 		printf("cd: no such file or directory: %s\n", path);
-}
+}	
 
 int	isbuiltin(char *cmd)
 {

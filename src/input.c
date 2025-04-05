@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:08:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 09:35:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:23:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,18 @@ void	print_cmds(t_cmd *cmd)
 
 char	*get_input(void)
 {
-	char	*input;
-
-	input = readline("$ ");
+	char *(input), *(prompt);
+	prompt = ft_strdup(GREEN BOLD "➜  " RESET);
+	if (!prompt)
+		return (NULL);
+	input = readline(prompt);
+	free(prompt);
 	if (input && input[0])
 		add_history(input);
 	return (input);
 }
 
-void	shell_loop(char *envp[])
+void	shell_loop(t_data *data)
 {
 	char *(input);
 	t_token *(tokens);
@@ -74,7 +77,7 @@ void	shell_loop(char *envp[])
 		}
 		if (!input[0])
 			continue ;
-		tokens = tokenize_input(input);
+		tokens = tokenize_input(input, data);
 		free(input);
 		if (!tokens)
 			continue ;
@@ -84,7 +87,7 @@ void	shell_loop(char *envp[])
 		if (!cmds)
 			continue ;
 		// print_cmds(cmds);
-		exec_cmds(cmds, envp);
+		exec_cmds(cmds, data);
 		free_cmds(cmds);
 	}
 }

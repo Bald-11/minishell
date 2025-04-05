@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 08:22:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 11:48:26 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:25:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	count_cmds(t_cmd *cmd)
 	return (count);
 }
 
-char	*filename(char *cmd)
+char	*filename(char *cmd, t_data *data)
 {
 	char *(path), *(c_path);
 	char **(arr);
@@ -32,7 +32,7 @@ char	*filename(char *cmd)
 	i = -1;
 	if (!ft_strchr_ex(cmd, '/'))
 		return (cmd);
-	path = getenv("PATH");
+	path = ft_getenv("PATH", data->env);
 	if (!path)
 		return (cmd);
 	arr = ft_split(path, ':');
@@ -52,23 +52,24 @@ char	*filename(char *cmd)
 	return (cmd);
 }
 
-void	exec_c(t_cmd *cmd, char *envp[])
+void	exec_c(t_cmd *cmd, t_data *data)
 {
-	if (isbuiltin(cmd->args[0]))
+	/* if (isbuiltin(cmd->args[0]))
 	{
 		// do something here
 		printf("do something here\n"), exit(0);
 	}
-	else
+	else */
+	if (1)
 	{
-		if (execve(filename(cmd->args[0]), cmd->args, envp) == -1)
+		if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
 			printf("minishell: command not found: %s\n", cmd->args[0]), exit(1);
 	}
 }
 
 void	exec_b(t_cmd *cmd)
 {
-	if (!ft_strcmp(cmd->args[0], "saf"))
+	if (!ft_strcmp(cmd->args[0], "echo"))
 		return ;
 	else if (!ft_strcmp(cmd->args[0], "cd"))
 		cd(cmd->args[1]);
@@ -84,35 +85,44 @@ void	exec_b(t_cmd *cmd)
 		printf("exit\n"), exit(0);
 }
 
-int	exec_cmds(t_cmd *cmd, char *envp[])
+void	multi_cmd_handle(t_cmd *cmd, char *envp[], t_data *data)
 {
-	int (cmd_count);//, i = 0;
-	pid_t (pid);
-	cmd_count = count_cmds(cmd);
-	/* if (cmd_count > 1)
-		return (0); */
-	/* pid = (pid_t *)malloc(cmd_count * sizeof(pid_t));
+	(void)cmd;
+	(void)envp;
+	(void)data;
+	/* pid_t *(pid);
+	pid = (pid_t *)malloc(cmd_count * sizeof(pid_t));
 	if (!pid)
-		return (0); */
-	/* while (i < cmd_count)
+		return (0);
+	while (i < cmd_count)
 	{
 		pid[i] = fork();
 		// add a check if fork fails, free and return.
 		if (!pid[i])
 		i++;
 	} */
-	if (cmd_count == 1)
+}
+
+int	exec_cmds(t_cmd *cmd, t_data *data)
+{
+	pid_t (pid);
+	data->cmd_count = count_cmds(cmd);
+	if (data->cmd_count == 1)
 	{
-		if (isbuiltin(cmd->args[0]))
+		/* if (isbuiltin(cmd->args[0]))
 			exec_b(cmd);
-		else
+		else */
+		if (1)
 		{
 			pid = fork();
 			if (!pid)
-				exec_c(cmd, envp);
+				exec_c(cmd, data);
 			waitpid(pid, 0, 0);
 		}
 	}
-	// printf("CMD COUNT: %d\n", cmd_count);
+	else
+	{
+		multi_cmd_handle(cmd, data->env, data);
+	}
 	return (0);
 }

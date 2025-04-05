@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/27 15:56:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:21:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	single_quote_handle(char **input, char **result)
 	(*input)++;
 }
 
-void	double_quote_handle(char **input, char **result)
+void	double_quote_handle(char **input, char **result, t_data *data)
 {
 	char *(end);
 	(*input)++;
@@ -91,7 +91,7 @@ void	double_quote_handle(char **input, char **result)
 	while (*input < end)
 	{
 		if (**input == '$')
-			env_var_handle(input, result);
+			env_var_handle(input, result, data);
 		else
 		{
 			append_char(result, **input);
@@ -101,7 +101,7 @@ void	double_quote_handle(char **input, char **result)
 	(*input)++;
 }
 
-t_token	*tokenize_input(char *input)
+t_token	*tokenize_input(char *input, t_data *data)
 {
 	t_token *(head);
 	head = NULL;
@@ -116,7 +116,7 @@ t_token	*tokenize_input(char *input)
 			tokenize_redirects(&head, &input);
 		else
 		{
-			if (!tokenize_else(&head, &input))
+			if (!tokenize_else(&head, &input, data))
 				return (NULL);
 		}
 		if (!head)
