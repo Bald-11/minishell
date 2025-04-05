@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/30 20:30:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 09:58:40 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }	t_cmd;
 
-void	shell_loop(void);
+void	shell_loop(char *envp[]);
 void	free_tokens(t_token *tokens);
 void	add_token(t_token **head, t_token *new_token);
 void	ft_strncpy(char *dest, const char *src, size_t size);
@@ -85,12 +85,16 @@ int		add_redir(t_cmd *cmd, t_redir_type type, char *file);
 int		ft_isalnum(int c);
 int		ft_isspace(int c);
 int		handle_redirection(t_cmd *cmd, t_token *token);
+int		exec_cmds(t_cmd *cmd, char *envp[]);
+int		ft_strchr_ex(const char *s, char c);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, char *src);
+char	**ft_split(char const *s, char c);
+char	*ft_strjoin_ex(char const *s1, char const *s2);
 
 size_t	ft_strlen(const char *s);
 

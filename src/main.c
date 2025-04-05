@@ -6,14 +6,16 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/22 18:09:27 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 09:32:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-int	main(void)
+int	main(int ac, char *av[], char *envp[])
 {
-	shell_loop();
+	(void)ac;
+	(void)av;
+	shell_loop(envp);
 	return (0);
 }

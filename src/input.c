@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:08:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/30 20:37:56 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 09:35:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-/*void	print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
 	t_token	*temp;
 
@@ -47,7 +47,7 @@ void	print_cmds(t_cmd *cmd)
 		}
 		temp = temp->next;
 	}
-}*/
+}
 
 char	*get_input(void)
 {
@@ -59,7 +59,7 @@ char	*get_input(void)
 	return (input);
 }
 
-void	shell_loop(void)
+void	shell_loop(char *envp[])
 {
 	char *(input);
 	t_token *(tokens);
@@ -79,9 +79,12 @@ void	shell_loop(void)
 		if (!tokens)
 			continue ;
 		cmds = parse_tokens(tokens);
+		// print_tokens(tokens);
 		free_tokens(tokens);
 		if (!cmds)
 			continue ;
+		// print_cmds(cmds);
+		exec_cmds(cmds, envp);
 		free_cmds(cmds);
 	}
 }

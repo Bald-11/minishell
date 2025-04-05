@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:01:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/27 15:38:18 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:16:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	env_var_handle(char **input, char **result)
 	(*input)++;
 	int (i);
 	char *(var_name), *(value);
+	if (**input == '?')
+	{
+		(*input)++;
+		append_string(result, "0"); // placeholder for now
+		return ;
+	}
 	var_name = ft_strdup("");
 	if (!var_name)
 		return ;
