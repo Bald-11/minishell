@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:31:29 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/03/30 20:30:05 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 17:41:10 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_arg_token(t_cmd *cmd, char *value, t_cmd **head)
 	return (1);
 }
 
-t_cmd	*handle_pipe_token(t_token *token, t_cmd **head)
+t_cmd	*handle_pipe_token(t_token *token, t_cmd **head, t_data *data)
 {
 	if (token->next->type == T_PIPE || token->next->type == T_EOF)
 	{
@@ -32,10 +32,10 @@ t_cmd	*handle_pipe_token(t_token *token, t_cmd **head)
 			free_cmds(*head);
 		return (NULL);
 	}
-	return (init_cmd(head));
+	return (init_cmd(head, data));
 }
 
-int	process_token(t_token **token_og, t_cmd **cmd, t_cmd **head)
+int	process_token(t_token **token_og, t_cmd **cmd, t_cmd **head, t_data *data)
 {
 	t_token *(token);
 	int (result);
@@ -44,7 +44,7 @@ int	process_token(t_token **token_og, t_cmd **cmd, t_cmd **head)
 		return (handle_arg_token(*cmd, token->value, head));
 	else if (token->type == T_PIPE)
 	{
-		*cmd = handle_pipe_token(token, head);
+		*cmd = handle_pipe_token(token, head, data);
 		return (*cmd != NULL);
 	}
 	else if (token->type == T_REDIR_OUT || token->type == T_APPEND
@@ -60,19 +60,19 @@ int	process_token(t_token **token_og, t_cmd **cmd, t_cmd **head)
 	return (1);
 }
 
-t_cmd	*parse_tokens(t_token *token)
+t_cmd	*parse_tokens(t_token *token, t_data *data)
 {
 	t_cmd *(head), *(cmd);
 	head = NULL;
 	cmd = NULL;
 	if (token && token->type == T_PIPE)
 		return (printf("minishell: syntax error\n"), NULL);
-	cmd = init_cmd(&head);
+	cmd = init_cmd(&head, data);
 	if (!cmd)
 		return (NULL);
 	while (token && token->type != T_EOF)
 	{
-		if (!process_token(&token, &cmd, &head))
+		if (!process_token(&token, &cmd, &head, data))
 			return (NULL);
 		token = token->next;
 	}

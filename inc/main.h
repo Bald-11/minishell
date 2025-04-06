@@ -13,15 +13,16 @@
 #ifndef MAIN_H
 # define MAIN_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
+# include <errno.h>
 # include <fcntl.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"
@@ -69,20 +70,24 @@ typedef struct s_redir
 	struct s_redir		*next;
 }	t_redir;
 
-typedef struct s_cmd
-{
-	char				**args;
-	t_redir				*redir;
-	struct s_cmd		*next;
-}	t_cmd;
-
 typedef struct s_data
 {
-	int					last_exit_status;
-	int					cmd_count;
+	int					status; // status of the last command
+	int					cc;     // command count
+	int					**pipe;
 	char				**env;
 	pid_t				*pid;
 }	t_data;
+
+typedef struct s_cmd
+{
+	char				**args;
+	int					in;
+	int					out;
+	t_redir				*redir;
+	t_data				*data;
+	struct s_cmd		*next;
+}	t_cmd;
 
 void	shell_loop(t_data *data);
 void	free_tokens(t_token *tokens);
@@ -97,6 +102,9 @@ void	double_quote_handle(char **input, char **result, t_data *data);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result, t_data *data);
 void	cd(char *path);
+void	print_error(char *str, int err);
+void	free_env(char **env);
+void	free_n_exit(t_cmd *cmd, int status);
 
 int		word_len(char *input);
 int		tokenize_else(t_token **head, char **input, t_data *data);
@@ -108,7 +116,7 @@ int		handle_redirection(t_cmd *cmd, t_token *token);
 int		exec_cmds(t_cmd *cmd, t_data *data);
 int		ft_strchr_ex(const char *s, char c);
 int		ft_strcmp(char *s1, char *s2);
-// int		isbuiltin(char *cmd, char **args, char **envp);
+int		isbuiltin(char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char	*ft_strdup(const char *s);
@@ -126,9 +134,9 @@ size_t	ft_strlen(const char *s);
 t_token	*create_token(t_token_type type, char *value);
 t_token	*tokenize_input(char *input, t_data *data);
 
-t_cmd	*create_cmd(void);
-t_cmd	*parse_tokens(t_token *token);
-t_cmd	*init_cmd(t_cmd **head);
+t_cmd	*create_cmd(t_data *data);
+t_cmd	*parse_tokens(t_token *token, t_data *data);
+t_cmd	*init_cmd(t_cmd **head, t_data *data);
 
 t_redir	*create_redir(t_redir_type type, char *file);
 

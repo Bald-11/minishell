@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 16:37:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:19:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	init_data(t_data *data, char *envp[])
 {
 	int (i);
 	i = 0;
-	data->last_exit_status = 0;
+	data->status = 0;
 	data->pid = NULL;
-	data->cmd_count = 0;
+	data->cc = 0;
 	while (envp[i])
 		i++;
 	data->env = (char **)malloc((i + 1) * sizeof(char *));
@@ -56,5 +56,6 @@ int	main(int ac, char *av[], char *envp[])
 		return (free_env(data.env), 1);
 	shell_loop(&data);
 	free_env(data.env);
+	rl_clear_history();
 	return (0);
 }

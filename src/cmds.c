@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 13:42:53 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 11:43:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:04:18 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_cmds(t_cmd *cmd)
 	}
 }
 
-t_cmd	*create_cmd(void)
+t_cmd	*create_cmd(t_data *data)
 {
 	t_cmd *(cmd);
 	cmd = malloc(sizeof(t_cmd));
@@ -54,6 +54,9 @@ t_cmd	*create_cmd(void)
 	cmd->args[0] = NULL;
 	cmd->redir = NULL;
 	cmd->next = NULL;
+	cmd->data = data;
+	cmd->in = 0;
+	cmd->out = 1;
 	return (cmd);
 }
 

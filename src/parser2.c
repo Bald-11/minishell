@@ -6,16 +6,16 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:39:18 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 08:16:09 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/05 17:39:23 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-t_cmd	*init_cmd(t_cmd **head)
+t_cmd	*init_cmd(t_cmd **head, t_data *data)
 {
 	t_cmd *(cmd), *(last);
-	cmd = create_cmd();
+	cmd = create_cmd(data);
 	if (!cmd)
 	{
 		if (*head)

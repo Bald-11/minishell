@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 10:31:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 15:12:34 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:42:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cd(char *path)
 
 int	isbuiltin(char *cmd)
 {
-	if (!ft_strcmp(cmd, "dasf"))
+	if (!ft_strcmp(cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd, "cd"))
 		return (1);

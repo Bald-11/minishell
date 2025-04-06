@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:08:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 16:23:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:30:41 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-void	print_tokens(t_token *tokens)
+/* void	print_tokens(t_token *tokens)
 {
 	t_token	*temp;
 
@@ -47,7 +47,7 @@ void	print_cmds(t_cmd *cmd)
 		}
 		temp = temp->next;
 	}
-}
+} */
 
 char	*get_input(void)
 {
@@ -69,7 +69,7 @@ void	shell_loop(t_data *data)
 	t_cmd *(cmds);
 	while (1)
 	{
-		input = get_input();
+		input = get_input(); // history bug needs to be fixed with signal handler
 		if (!input)
 		{
 			printf("exit\n");
@@ -81,12 +81,10 @@ void	shell_loop(t_data *data)
 		free(input);
 		if (!tokens)
 			continue ;
-		cmds = parse_tokens(tokens);
-		// print_tokens(tokens);
+		cmds = parse_tokens(tokens, data);
 		free_tokens(tokens);
 		if (!cmds)
 			continue ;
-		// print_cmds(cmds);
 		exec_cmds(cmds, data);
 		free_cmds(cmds);
 	}
