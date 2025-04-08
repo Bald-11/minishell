@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbarrah <mbarrah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 11:22:17 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:37:16 by mbarrah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,15 @@ void	double_quote_handle(char **input, char **result, t_data *data);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result, t_data *data);
 void	cd(char *path);
+void	echo(char **args);
+void	pwd(void);
+void	env(t_data *data);
+void	exit_shell(char **args, t_data *data);
 void	print_error(char *str, int err);
 void	free_env(char **env);
 void	free_n_exit(t_cmd *cmd, int status);
-
+void	check_in(t_cmd *cmd);
+void	check_out(t_cmd *cmd);
 int		word_len(char *input);
 int		tokenize_else(t_token **head, char **input, t_data *data);
 int		add_arg_to_cmd(t_cmd *cmd, char *arg);

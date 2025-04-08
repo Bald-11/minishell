@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbarrah <mbarrah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 08:22:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/06 19:00:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:41:47 by mbarrah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,44 @@ void	free_n_exit(t_cmd *cmd, int status)
 
 void	exec_c(t_cmd *cmd, t_data *data)
 {
-	/* if (isbuiltin(cmd->args[0]))
+	if (isbuiltin(cmd->args[0]))
 	{
-		// do something here
-		printf("do something here\n"), exit(0);
+		if (!ft_strcmp(cmd->args[0], "cd"))
+			cd(cmd->args[1]);
+		else if (!ft_strcmp(cmd->args[0], "echo"))
+			echo(cmd->args);
+		else if (!ft_strcmp(cmd->args[0], "pwd"))
+			pwd();
+		
+		/*I got a error here*/
+		// else if (!ft_strcmp(cmd->args[0], "export"))
+		// 	export(cmd->args, data);
+		// else if (!ft_strcmp(cmd->args[0], "unset"))
+		// 	unset(cmd->args, data);
+		/*I got a error here*/
+
+		else if (!ft_strcmp(cmd->args[0], "env"))
+			env(data);
+		else if (!ft_strcmp(cmd->args[0], "exit"))
+			exit_shell(cmd->args, data);
+		return ;
 	}
-	else */
-	if (1)
+	if (cmd->in != 0)
 	{
-		if (cmd->in != 0)
-		{
-			dup2(cmd->in, 0);
-			close(cmd->in);
-		}
-		if (cmd->out != 1)
-		{
-			dup2(cmd->out, 1);
-			close(cmd->out);
-		}
-		if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
-		{
-			if (errno == 2)
-				print_error(cmd->args[0], 1), free_n_exit(cmd, 127);
-			else
-				print_error(cmd->args[0], 2), free_n_exit(cmd, 126);
-		}
+		dup2(cmd->in, 0);
+		close(cmd->in);
+	}
+	if (cmd->out != 1)
+	{
+		dup2(cmd->out, 1);
+		close(cmd->out);
+	}
+	if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
+	{
+		if (errno == 2)
+			print_error(cmd->args[0], 1), free_n_exit(cmd, 127);
+		else
+			print_error(cmd->args[0], 2), free_n_exit(cmd, 126);
 	}
 }
 
@@ -107,7 +120,10 @@ void	open_pipes(t_data *data)
 	{
 		data->pipe[i] = (int *)malloc(sizeof(int) * 2);
 		if (!data->pipe[i] || pipe(data->pipe[i]) == -1)
-			free_n_exit(data);
+		{
+			printf("minishell: pipe error\n");
+			exit(1);
+		}
 		i++;
 	}
 }
@@ -125,28 +141,34 @@ void	close_all_pipes(t_data *data)
 
 void	execute(t_cmd *cmd, t_data *data, int i)
 {
-	check_in(cmd, data, i);
-	check_out(cmd, data, i);
+	check_in(cmd);
+	check_out(cmd);
 	if (i == 0)
-		(check_in(cmd, data, i), dup2(cmd->in, 0), close(cmd->in));
+	{
+		dup2(cmd->in, 0);
+		close(cmd->in);
+	}
 	else
-		dup2(s->pipe[i - 1][0], 0);
-	if (i == (s->ac - 1))
-		(check_out(a, s), dup2(s->out, 1), close(s->out));
+		dup2(data->pipe[i - 1][0], 0);
+	if (i == (data->cc - 1))
+	{
+		dup2(cmd->out, 1);
+		close(cmd->out);
+	}
 	else
-		dup2(s->pipe[i][1], 1);
-	close_all_pipes(s);
-	av = ft_split(a[i + 2 + s->o_ap], ' ');
-	if (!av || !av[0])
-		(print_error(a[0], 13, av[0]), free(av), free_n_exit(s, 126));
-	if (execve(filename(av[0], envp, s), av, envp) == -1)
+		dup2(data->pipe[i][1], 1);
+	close_all_pipes(data);
+	if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
 	{
 		if (errno == 2)
-			(print_error(a[0], 127, av[0]), free_arr(av), free_n_exit(s, 127));
+		{
+			print_error(cmd->args[0], 1);
+			free_n_exit(cmd, 127);
+		}
 		else
 		{
-			(print_error(a[0], errno, av[0]), free_arr(av));
-			free_n_exit(s, 126);
+			print_error(cmd->args[0], 2);
+			free_n_exit(cmd, 126);
 		}
 	}
 }
