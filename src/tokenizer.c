@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:59:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/05 16:21:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:09:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,18 @@ int	quote_check(char *input)
 	return (1);
 }
 
-void	tokenize_redirects(t_token **head, char **input)
+void	tokenize_redirects(t_token **head, char **input, t_data *data)
 {
-	if (*(*input + 1))
+	if (*(*input + 1) == '>' || *(*input + 1) == '<')
 	{
-		if (*(*input + 1) == '>' || *(*input + 1) == '<')
+		if (**input == '>')
+			add_token(head, create_token(T_APPEND, ">>"));
+		else if (**input == '<')
 		{
-			if (**input == '>')
-				add_token(head, create_token(T_APPEND, ">>"));
-			else if (**input == '<')
-				add_token(head, create_token(T_HEREDOC, "<<"));
-			(*input)++;
+			add_token(head, create_token(T_HEREDOC, "<<"));
+			data->heredoc_f = 1;
 		}
-		else
-		{
-			if (**input == '>')
-				add_token(head, create_token(T_REDIR_OUT, ">"));
-			else if (**input == '<')
-				add_token(head, create_token(T_REDIR_IN, "<"));
-		}
+		(*input)++;
 	}
 	else
 	{
@@ -58,9 +51,9 @@ void	tokenize_redirects(t_token **head, char **input)
 	}
 }
 
-void	single_quote_handle(char **input, char **result)
+void	single_quote_handle(t_token **head, char **input, char **result)
 {
-	char *(end);
+	char *(end), *(tmp);
 	int (len), i = 0;
 	(*input)++;
 	end = ft_strchr(*input, '\'');
@@ -70,6 +63,12 @@ void	single_quote_handle(char **input, char **result)
 		return ;
 	}
 	len = end - *input;
+	if (len == 0)
+	{
+		tmp = *input;
+		if (ft_isspace(tmp[1]))
+			add_token(head, create_token(T_ARG, ""));
+	}
 	while (i++ < len)
 	{
 		append_char(result, **input);
@@ -78,9 +77,10 @@ void	single_quote_handle(char **input, char **result)
 	(*input)++;
 }
 
-void	double_quote_handle(char **input, char **result, t_data *data)
+void	double_quote_handle(t_token **head, char **input, \
+	char **result, t_data *data)
 {
-	char *(end);
+	char *(end), *(tmp);
 	(*input)++;
 	end = ft_strchr(*input, '"');
 	if (!end)
@@ -88,9 +88,15 @@ void	double_quote_handle(char **input, char **result, t_data *data)
 		(*input) += ft_strlen(*input);
 		return ;
 	}
+	if (!(end - *input))
+	{
+		tmp = *input;
+		if (ft_isspace(tmp[1]))
+			add_token(head, create_token(T_ARG, ""));
+	}
 	while (*input < end)
 	{
-		if (**input == '$')
+		if (**input == '$' && !data->heredoc_f)
 			env_var_handle(input, result, data);
 		else
 		{
@@ -113,7 +119,7 @@ t_token	*tokenize_input(char *input, t_data *data)
 		if (*input == '|')
 			add_token(&head, create_token(T_PIPE, "|"));
 		else if (*input == '>' || *input == '<')
-			tokenize_redirects(&head, &input);
+			tokenize_redirects(&head, &input, data);
 		else
 		{
 			if (!tokenize_else(&head, &input, data))

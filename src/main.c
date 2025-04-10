@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/06 18:19:03 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:09:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_data(t_data *data, char *envp[])
 	data->status = 0;
 	data->pid = NULL;
 	data->cc = 0;
+	data->heredoc_f = 0;
 	while (envp[i])
 		i++;
 	data->env = (char **)malloc((i + 1) * sizeof(char *));

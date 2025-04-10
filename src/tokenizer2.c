@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:01:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/06 15:22:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:09:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,17 @@ int	tokenize_else(t_token **head, char **input, t_data *data)
 		&& **input != '>' && **input != '<')
 	{
 		if (**input == '\'')
-			single_quote_handle(input, &result);
+			single_quote_handle(head, input, &result);
 		else if (**input == '"')
-			double_quote_handle(input, &result, data);
-		else if (**input == '$')
+			double_quote_handle(head, input, &result, data);
+		else if (**input == '$' && !data->heredoc_f)
 			env_var_handle(input, &result, data);
 		else
 		{
 			append_char(&result, **input);
 			(*input)++;
 		}
+		data->heredoc_f = 0;
 	}
 	if (result[0])
 		add_token(head, create_token(T_ARG, result));

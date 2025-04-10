@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarrah <mbarrah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/08 13:37:16 by mbarrah          ###   ########.fr       */
+/*   Updated: 2025/04/10 13:06:54 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ typedef struct s_redir
 
 typedef struct s_data
 {
-	int					status; // status of the last command
-	int					cc;     // command count
+	int					status;
+	int					cc;
+	int					heredoc_f;
 	int					**pipe;
 	char				**env;
 	pid_t				*pid;
@@ -95,22 +96,30 @@ void	add_token(t_token **head, t_token *new_token);
 void	ft_strncpy(char *dest, const char *src, size_t size);
 void	ft_strncat(char *dest, const char *src, size_t size);
 void	skip_whites(char **input);
-void	tokenize_redirects(t_token **head, char **input);
+void	tokenize_redirects(t_token **head, char **input, t_data *data);
 void	free_cmds(t_cmd *cmd);
-void	single_quote_handle(char **input, char **result);
-void	double_quote_handle(char **input, char **result, t_data *data);
+void	single_quote_handle(t_token **head, char **input, char **result);
+void	double_quote_handle(t_token **head, char **input, \
+	char **result, t_data *data);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result, t_data *data);
+void	cd(char *path);
+void	print_error(char *str, int err);
+void	free_env(char **env);
+void	free_n_exit(t_cmd *cmd, int status);
+void	close_all_pipes(t_data *data);
+void	check_access(char *file);
+void	free_n_exit(t_cmd *cmd, int status);
+void	check_in(t_cmd *cmd, int index);
+void	check_out(t_cmd *cmd, int index);
+void	set_exit_status(t_data *data);
+void	exec_b(t_cmd *cmd);
 void	cd(char *path);
 void	echo(char **args);
 void	pwd(void);
 void	env(t_data *data);
-void	exit_shell(char **args, t_data *data);
-void	print_error(char *str, int err);
-void	free_env(char **env);
-void	free_n_exit(t_cmd *cmd, int status);
-void	check_in(t_cmd *cmd);
-void	check_out(t_cmd *cmd);
+void	exit_shell(t_cmd *cmd);
+
 int		word_len(char *input);
 int		tokenize_else(t_token **head, char **input, t_data *data);
 int		add_arg_to_cmd(t_cmd *cmd, char *arg);
@@ -123,6 +132,7 @@ int		ft_strchr_ex(const char *s, char c);
 int		ft_strcmp(char *s1, char *s2);
 int		isbuiltin(char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		count_cmds(t_cmd *cmd);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -133,6 +143,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin_ex(char const *s1, char const *s2);
 char	*ft_getenv(char *var, char **env);
 char	*ft_itoa(int n);
+char	*filename(char *cmd, t_data *data);
 
 size_t	ft_strlen(const char *s);
 

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:08:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/06 18:30:41 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:09:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_cmds(t_cmd *cmd)
 		printf("\n");
 		while (temp->redir)
 		{
-			printf("REDIR TYPE: %d\tFILE: %s\n", temp->redir->type, 
+			printf("REDIR TYPE: %d\tFILE: %s\n", temp->redir->type,
 			temp->redir->file);
 			temp->redir = temp->redir->next;
 		}
@@ -49,10 +49,15 @@ void	print_cmds(t_cmd *cmd)
 	}
 } */
 
-char	*get_input(void)
+// history bug needs to be fixed with signal handler
+
+char	*get_input(t_data *data)
 {
 	char *(input), *(prompt);
-	prompt = ft_strdup(GREEN BOLD "➜  " RESET);
+	if (data->status == 0)
+		prompt = ft_strdup(GREEN BOLD "➜  " RESET);
+	else
+		prompt = ft_strdup(RED BOLD "➜  " RESET);
 	if (!prompt)
 		return (NULL);
 	input = readline(prompt);
@@ -69,7 +74,7 @@ void	shell_loop(t_data *data)
 	t_cmd *(cmds);
 	while (1)
 	{
-		input = get_input(); // history bug needs to be fixed with signal handler
+		input = get_input(data);
 		if (!input)
 		{
 			printf("exit\n");

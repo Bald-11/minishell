@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:13:20 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/06 17:45:26 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:10:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_getenv(char *var, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], var, v_len))
+		if ((!ft_strncmp(env[i], var, v_len)) && (env[i][v_len] == '='))
 			return (env[i] + v_len + 1);
 		i++;
 	}
