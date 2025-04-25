@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:32:37 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:12:06 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:26:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	exec_b(t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], "cd"))
-		cd(cmd->args[1]);
+		ft_cd(cmd->args[1]);
 	else if (!ft_strcmp(cmd->args[0], "echo"))
-		echo(cmd->args);
+		ft_echo(cmd->args);
 	else if (!ft_strcmp(cmd->args[0], "pwd"))
-		pwd();
+		ft_pwd(cmd);
 	/*I got a error here
 	else if (!ft_strcmp(cmd->args[0], "export"))
 		export(cmd->args, data);
@@ -27,16 +27,16 @@ void	exec_b(t_cmd *cmd)
 		unset(cmd->args, data);
 	I got a error here*/
 	else if (!ft_strcmp(cmd->args[0], "env"))
-		env(cmd->data);
+		ft_env(cmd->data);
 	else if (!ft_strcmp(cmd->args[0], "exit"))
-		exit_shell(cmd);
+		ft_exit(cmd);
 }
 
 void	exit_shell(t_cmd *cmd)
 {
-	int (exit_status);
+	long (exit_status);
 	exit_status = cmd->data->status;
 	free_env(cmd->data->env);
 	free_cmds(cmd);
-	exit(exit_status);
+	exit((unsigned char)exit_status);
 }

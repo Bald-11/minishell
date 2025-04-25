@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 10:31:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:08:39 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:30:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-void	cd(char *path)
+void	ft_cd(char *path)
 {
 	char	*home;
 
@@ -30,19 +30,27 @@ void	cd(char *path)
 		printf("cd: no such file or directory: %s\n", path);
 }
 
-void	pwd(void)
+void	ft_pwd(t_cmd *cmd)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd)
+	char *(cwd);
+	pid_t (pid);
+	pid = fork();
+	if (!pid)
 	{
-		printf("%s\n", cwd);
-		free(cwd);
+		check_out(cmd, -1);
+		cwd = getcwd(NULL, 0);
+		if (cwd)
+		{
+			write(cmd->out, cwd, ft_strlen(cwd));
+			write(cmd->out, "\n", 1);
+			free(cwd);
+		}
+		exit(0);
 	}
+	wait(NULL);
 }
 
-void	env(t_data *data)
+void	ft_env(t_data *data)
 {
 	int	i;
 

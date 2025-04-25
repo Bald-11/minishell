@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:06:54 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:26:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,13 @@ void	check_in(t_cmd *cmd, int index);
 void	check_out(t_cmd *cmd, int index);
 void	set_exit_status(t_data *data);
 void	exec_b(t_cmd *cmd);
-void	cd(char *path);
-void	echo(char **args);
-void	pwd(void);
-void	env(t_data *data);
+void	ft_cd(char *path);
+void	ft_echo(char **args);
+void	ft_pwd(t_cmd *cmd);
+void	ft_env(t_data *data);
 void	exit_shell(t_cmd *cmd);
+void	ft_exit(t_cmd *cmd);
+void	ft_strtol(char *str);
 
 int		word_len(char *input);
 int		tokenize_else(t_token **head, char **input, t_data *data);
@@ -133,6 +135,7 @@ int		ft_strcmp(char *s1, char *s2);
 int		isbuiltin(char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		count_cmds(t_cmd *cmd);
+int		ft_atoi(const char *str);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
