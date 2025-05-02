@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 18:09:33 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:12:22 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:20:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	print_error(char *str, int err)
 		perror(str);
 	else
 	{
-		printf("minishell: ");
+		ft_printf("minishell: ");
 		if (err == 1)
-			printf("command not found");
+			ft_printf("command not found");
 		else if (err == 2)
-			printf("permission denied");
+			ft_printf("permission denied");
 		else if (err == 3)
-			printf("no such file or directory");
-		printf(": %s\n", str);
+			ft_printf("no such file or directory");
+		ft_printf(": %s\n", str);
 	}
 }

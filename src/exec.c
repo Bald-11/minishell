@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 08:22:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:08:30 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:33:33 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	exec_c(t_cmd *cmd, t_data *data)
 		dup2(cmd->out, 1);
 		close(cmd->out);
 	}
+	if (!cmd->args[0])
+		free_n_exit(cmd, 0);
 	if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
 	{
 		if (errno == 2)
@@ -58,8 +60,10 @@ void	execute(t_cmd *cmd, t_data *data, int i)
 	if (cmd->out != 1)
 		(dup2(cmd->out, 1), close(cmd->out));
 	close_all_pipes(data);
+	if (!cmd->args[0])
+		free_n_exit(cmd, 0);
 	if (isbuiltin(cmd->args[0]))
-		(exec_b(cmd), exit(1));
+		(exec_b(cmd), exit(data->status));
 	else
 	{
 		if (execve(filename(cmd->args[0], data), cmd->args, data->env) == -1)
@@ -106,7 +110,7 @@ int	exec_cmds(t_cmd *cmd, t_data *data)
 	if (data->cc == 1)
 	{
 		if (isbuiltin(cmd->args[0]))
-			exec_b(cmd);
+			exec_b1(cmd);
 		else
 		{
 			pid = fork();

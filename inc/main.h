@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:27:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/25 16:26:32 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:56:11 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -103,7 +104,6 @@ void	double_quote_handle(t_token **head, char **input, \
 	char **result, t_data *data);
 void	append_char(char **str, char c);
 void	env_var_handle(char **input, char **result, t_data *data);
-void	cd(char *path);
 void	print_error(char *str, int err);
 void	free_env(char **env);
 void	free_n_exit(t_cmd *cmd, int status);
@@ -114,8 +114,10 @@ void	check_in(t_cmd *cmd, int index);
 void	check_out(t_cmd *cmd, int index);
 void	set_exit_status(t_data *data);
 void	exec_b(t_cmd *cmd);
-void	ft_cd(char *path);
-void	ft_echo(char **args);
+void	exec_b1(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd, char *path);
+void	ft_cd_m(t_cmd *cmd, char *path);
+void	ft_echo(t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_env(t_data *data);
 void	exit_shell(t_cmd *cmd);
@@ -136,6 +138,13 @@ int		isbuiltin(char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		count_cmds(t_cmd *cmd);
 int		ft_atoi(const char *str);
+
+int		ft_printf(const char *s, ...);
+int		ft_putchar_ft(char c);
+int		ft_putstr_ft(char *s);
+int		ft_putnbr_unsigned_ft(unsigned int n);
+int		ft_putnbr_ft(int n);
+int		ft_putnbr_hexa_c_ft(unsigned int n);
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);

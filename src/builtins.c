@@ -6,48 +6,42 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 10:31:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/25 16:30:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:55:24 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-void	ft_cd(char *path)
+void	ft_cd(t_cmd *cmd, char *path)
 {
-	char	*home;
-
-	if (!path)
-	{
-		home = getenv("HOME");
-		if (!home)
-		{
-			printf("cd: HOME not set\n");
-			return ;
-		}
-		path = home;
-	}
+	cmd->data->status = 0;
 	if (chdir(path) == -1)
-		printf("cd: no such file or directory: %s\n", path);
+	{
+		ft_printf("minishell: cd: %s: No such file or directory\n", path);
+		cmd->data->status = 1;
+	}
+}
+
+void	ft_cd_m(t_cmd *cmd, char *path)
+{
+	if (chdir(path) == -1)
+	{
+		ft_printf("minishell: cd: %s: No such file or directory\n", path);
+		cmd->data->status = 1;
+	}
 }
 
 void	ft_pwd(t_cmd *cmd)
 {
 	char *(cwd);
-	pid_t (pid);
-	pid = fork();
-	if (!pid)
+	cwd = getcwd(NULL, 0);
+	if (cwd)
 	{
-		check_out(cmd, -1);
-		cwd = getcwd(NULL, 0);
-		if (cwd)
-		{
-			write(cmd->out, cwd, ft_strlen(cwd));
-			write(cmd->out, "\n", 1);
-			free(cwd);
-		}
-		exit(0);
+		write(1, cwd, ft_strlen(cwd));
+		write(1, "\n", 1);
+		free(cwd);
+		cmd->data->status = 0;
 	}
-	wait(NULL);
 }
 
 void	ft_env(t_data *data)
