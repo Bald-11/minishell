@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 11:39:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:38:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	process_input(t_data *data, char *input)
 	data->cmd = parse_commands(data->token, data);
 	if (!data->cmd)
 	{
-		printf("Error: Failed to parse commands\n");
+		// printf("Error: Failed to parse commands\n");
 		cleanup_and_continue(data, input);
 		return (0);
 	}

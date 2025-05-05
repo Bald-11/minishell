@@ -6,11 +6,23 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 17:23:46 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:50:25 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+
+static void	exec_b1_helper(t_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		ft_cd(cmd, cmd->args[1]);
+	else if (!ft_strcmp(cmd->args[0], "exit"))
+		ft_exit(cmd);
+	else if (!ft_strcmp(cmd->args[0], "unset"))
+		ft_unset(cmd);
+	else if (!ft_strcmp(cmd->args[0], "export") && cmd->args[1])
+		ft_export(cmd);
+}
 
 void	exec_b1(t_cmd *cmd)
 {
@@ -31,21 +43,14 @@ void	exec_b1(t_cmd *cmd)
 			ft_pwd(cmd);
 		else if (!ft_strcmp(cmd->args[0], "env"))
 			ft_env(cmd->data->env);
+		else if (!ft_strcmp(cmd->args[0], "export") && !cmd->args[1])
+			ft_export(cmd);
 		exit(0);
 	}
 	waitpid(pid, &cmd->data->status, 0);
 	set_exit_status(cmd->data);
 	if (!cmd->data->status)
-	{
-		if (!ft_strcmp(cmd->args[0], "cd"))
-			ft_cd(cmd, cmd->args[1]);
-		else if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit(cmd);
-		else if (!ft_strcmp(cmd->args[0], "unset"))
-			ft_unset(cmd);
-		else if (!ft_strcmp(cmd->args[0], "export")) // in/out not handled
-			ft_export(cmd);
-	}
+		exec_b1_helper(cmd);
 }
 
 void	exec_c(t_cmd *cmd, t_data *data)
@@ -118,7 +123,8 @@ void	multi_cmd_handle(t_cmd *cmd)
 	}
 	close_all_pipes(cmd->data);
 	i = 0;
-	while (i < cmd->data->cc && waitpid(cmd->data->pid[i], &cmd->data->status, 0) > 0)
+	while (i < cmd->data->cc && waitpid(cmd->data->pid[i], \
+		&cmd->data->status, 0) > 0)
 		i++;
 	set_exit_status(cmd->data);
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:55:59 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 13:43:31 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:55:39 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_data(t_data *data)
 	if (data->token)
 		free_tokens(data->token);
 	free(data);
+	unlink("/tmp/minishell.txt");
 }
 
 int	main(int argc, char **argv, char **envp)
