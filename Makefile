@@ -1,47 +1,69 @@
 NAME = minishell
-CC = cc
+
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
-LIBFLAGS = -lreadline -lhistory
+RM = rm -f
 
-RESET = \033[0m
-BOLD = \033[1m
-RED = \033[31m
-GREEN = \033[32m
-YELLOW = \033[33m
-BLUE = \033[34m
-MAGENTA = \033[35m
-CYAN = \033[36m
+# READLINE
+READLINE_LIB = -lreadline
+READLINE_INC = -I/usr/include/readline
 
-SRC_FILES = main.c input.c utils.c utils2.c utils3.c utils4.c tokens.c tokenizer.c tokenizer2.c \
-			parser.c parser2.c redir.c cmds.c exec.c ft_split.c builtins.c error.c exec_utils.c \
-			exec_utils2.c exec_utils3.c builtins2.c utils5.c ft_printf.c ft_printf_utils.c
+# SRCS & OBJS
+SRC = src/main.c \
+		src/env/init_env.c \
+		src/utils/ft_strchr.c \
+		src/utils/ft_strchr_ex.c \
+		src/utils/ft_strdup.c \
+		src/utils/ft_strlen.c \
+		src/utils/ft_strndup.c \
+		src/utils/ft_memcpy.c \
+		src/utils/ft_strcmp.c \
+		src/utils/ft_strncmp.c \
+		src/utils/ft_strjoin.c \
+		src/utils/ft_strjoin_ex.c \
+		src/utils/ft_split.c \
+		src/utils/ft_atoi.c \
+		src/utils/ft_printf.c \
+		src/utils/ft_printf_utils.c \
+		src/utils/ft_strncat.c \
+		src/utils/ft_strtol.c \
+		src/utils/ft_getenv.c \
+		src/utils/ft_strncpy.c \
+		src/utils/ft_env.c \
+		src/utils/ft_popnode.c \
+		src/input/input.c \
+		src/parser/check_quotes.c \
+		src/parser/tokenizer.c \
+		src/parser/token_utils.c \
+		src/parser/tokenize.c \
+		src/parser/expand_env.c \
+		src/parser/syntax_check.c \
+		src/parser/parse_cmd.c	\
+		src/exec/exec.c \
+		src/exec/exec_utils.c \
+		src/exec/error.c \
+		src/exec/redir.c \
+		src/exec/builtins.c \
+		src/exec/builtins_utils.c \
+		src/exec/builtins_utils2.c \
 
-SRC = $(addprefix src/, $(SRC_FILES))
-OBJ = $(SRC:.c=.o)
+OBJS = $(SRC:.c=.o)
 
+# RULES
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@echo "$(BOLD)$(BLUE)🔨 Building $(NAME)...$(RESET)"
-	@$(CC) $(OBJ) $(LIBFLAGS) -o $(NAME)
-	@echo "$(BOLD)$(GREEN)✅ Build successful! $(NAME) is ready.$(RESET)"
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(READLINE_LIB) -o $(NAME)
 
 %.o: %.c
-	@echo "$(YELLOW)🔄 Compiling $<...$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(READLINE_INC) -c $< -o $@
 
 clean:
-	@echo "$(MAGENTA)🧹 Cleaning object files...$(RESET)"
-	@rm -f $(OBJ)
-	@echo "$(GREEN)✨ Cleanup complete!$(RESET)"
+	$(RM) $(OBJS)
 
-fclean: 
-	@echo "$(MAGENTA)🧹 Cleaning object files...$(RESET)"
-	@rm -f $(OBJ)
-	@rm -f $(NAME)
-	@echo "$(GREEN)✨ Deep cleanup complete!$(RESET)"
+fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
-	@echo "$(CYAN)♻️  Project rebuilt from scratch!$(RESET)"
 
-.PHONY: clean fclean re all
+.PHONY: all clean fclean re 

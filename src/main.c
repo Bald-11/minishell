@@ -5,58 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 13:28:19 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/04/10 13:09:20 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/01 14:55:59 by mbarrah           #+#    #+#             */
+/*   Updated: 2025/05/05 13:43:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/main.h"
+#include "../inc/shell.h"
 
-int	init_data(t_data *data, char *envp[])
+void	init_data(t_data *data, char **envp)
 {
-	int (i);
-	i = 0;
 	data->status = 0;
-	data->pid = NULL;
 	data->cc = 0;
 	data->heredoc_f = 0;
-	while (envp[i])
-		i++;
-	data->env = (char **)malloc((i + 1) * sizeof(char *));
-	if (!data->env)
-		return (0);
-	i = 0;
-	while (envp[i])
-	{
-		data->env[i] = ft_strdup(envp[i]);
-		if (!data->env[i])
-			return (0);
-		i++;
-	}
-	data->env[i] = NULL;
-	return (1);
+	data->pipe = NULL;
+	data->pid = NULL;
+	data->env = init_env(envp);
+	data->envp = ft_envp(data->env);
+	data->cmd = NULL;
+	data->token = NULL;
+	data->redir = NULL;
 }
 
-void	free_env(char **env)
+void	free_data(t_data *data)
 {
-	int (i);
-	i = 0;
-	if (!env)
-		return ;
-	while (env[i])
-		free(env[i++]);
-	free(env);
+	if (data->env)
+		free_env(data->env);
+	if (data->cmd)
+		free_all_cmds(data->cmd);
+	if (data->token)
+		free_tokens(data->token);
+	free(data);
 }
 
-int	main(int ac, char *av[], char *envp[])
+int	main(int argc, char **argv, char **envp)
 {
-	(void)ac;
-	(void)av;
-	t_data (data);
-	if (!init_data(&data, envp))
-		return (free_env(data.env), 1);
-	shell_loop(&data);
-	free_env(data.env);
-	rl_clear_history();
-	return (0);
+	t_data	*data;
+	(void)argc;
+	(void)argv;
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (1);
+	init_data(data, envp);
+	minishell(data);
+	free_data(data);
+	return (data->status);
 }
