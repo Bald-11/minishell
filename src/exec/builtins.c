@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:58:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 17:19:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:16:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_cd(t_cmd *cmd, char *path)
 		cmd->data->status = 1;
 	}
 	update_env(&cmd->data->env, "PWD");
-	free_arr(cmd->data->envp);
 	cmd->data->envp = ft_envp(cmd->data->env);
 }
 
@@ -71,75 +70,18 @@ void	ft_pwd(t_cmd *cmd)
 	}
 }
 
-void	ft_export(t_cmd *cmd)
+void	update_env_node(t_env *env, char *key, char *value)
 {
-	if (!cmd->args[1] || !cmd->args[1][0])
+	int (v_len);
+	v_len = ft_strlen(key);
+	while (env)
 	{
-		print_sorted_env(cmd->data->env);
-		return;
-	}
-	int i = 1;
-	int j = 0;
-	int f = 0;
-	while (cmd->args[i])
-	{
-		j = 0;
-		if (!((cmd->args[i][0] >= 'A' && cmd->args[i][0] <= 'Z') || (cmd->args[i][0] == '_')))
+		if (!ft_strncmp(env->key, key, v_len))
 		{
-			ft_printf("minishell: export: `%s': not a valid identifier\n", cmd->args[i]);
-			i++;
-			cmd->data->status = 1;
-			f = 1;
-			continue;
+			env->value = value;
+			return ;
 		}
-		while (cmd->args[i][j])
-		{
-			if (!is_env_char(cmd->args[i][j]))
-			{
-				if (j != 0 && cmd->args[i][j] == '=')
-					add_env_node(&cmd->data->env, new_env_node(ft_strdup(cmd->args[i]), ft_strdup(&cmd->args[i][j+1])));
-				else
-				{
-					ft_printf("minishell: export: `%s': not a valid identifier\n", cmd->args[i]);
-					cmd->data->status = 1;
-					f = 1;
-				}
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-	if (!f)
-		cmd->data->status = 0;
-}
-
-void	ft_unset(t_cmd *cmd)
-{
-	int		i;
-
-	i = 1;
-	if (cmd->args[i])
-	{
-		while (cmd->args[i])
-		{
-			ft_popnode(&cmd->data->env, cmd->args[i]);
-			i++;
-		}
-		free_arr(cmd->data->envp);
-		cmd->data->envp = ft_envp(cmd->data->env);
-	}
-	cmd->data->status = 0;
-}
-
-void	ft_env(t_env *env)
-{
-	t_env *(tmp);
-	tmp = env;
-	while (tmp)
-	{
-		printf("%s = %s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
+		env = env->next;
 	}
 }
 

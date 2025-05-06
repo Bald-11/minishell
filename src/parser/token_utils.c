@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:32 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:21:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:06:02 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 int	is_whitespace(char c)
 {
@@ -103,14 +103,14 @@ char	*extract_quoted_token(char *input, int *i, char quote_type)
 			{
 				temp = ft_strndup(input + *i, 1);
 				result = ft_strjoin(result, temp);
-				free(temp);
+				// free(temp);
 			}
 		}
 		else
 		{
 			temp = ft_strndup(input + *i, 1);
 			result = ft_strjoin(result, temp);
-			free(temp);
+			// free(temp);
 		}
 		(*i)++;
 	}
@@ -157,8 +157,8 @@ char	*extract_token_value(char *input, int *i)
 			if (temp)
 			{
 				new_result = ft_strjoin(result, temp);
-				free(result);
-				free(temp);
+				// free(result);
+				// free(temp);
 				result = new_result;
 			}
 		}
@@ -173,8 +173,8 @@ char	*extract_token_value(char *input, int *i)
 			{
 				temp = ft_strndup(input + *i, len);
 				new_result = ft_strjoin(result, temp);
-				free(result);
-				free(temp);
+				// free(result);
+				// free(temp);
 				result = new_result;
 				*i += len;
 			}

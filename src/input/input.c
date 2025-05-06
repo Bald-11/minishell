@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 17:38:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:00:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/input.h"
 
 char	*get_input(void)
 {
@@ -28,7 +28,7 @@ char	*get_input(void)
 
 static void	cleanup_and_continue(t_data *data, char *input)
 {
-	free_tokens(data->token);
+	// free_tokens(data->token);
 	data->token = NULL;
 	free(input);
 }
@@ -69,7 +69,7 @@ void	minishell(t_data *data)
 		// print_cmds(data->cmd);
 		cleanup_and_continue(data, input);
 		exec_cmds(data->cmd);
-		free_all_cmds(data->cmd);
+		// free_all_cmds(data->cmd);
 		data->cmd = NULL;
 	}
 }

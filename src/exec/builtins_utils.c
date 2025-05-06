@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:13:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 17:25:26 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:10:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ void	update_env(t_env **head, char *value)
 	tmp = *head;
 	if (!tmp)
 	{
-		add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(getcwd(NULL, 0))));
+		add_env_node(head, new_env_node(ft_strdup(value), \
+		ft_strdup(getcwd(NULL, 0))));
 		return ;
 	}
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, value))
 		{
-			free(tmp->value);
 			tmp->value = ft_strdup(getcwd(NULL, 0));
 			break ;
 		}
 		else if (!tmp->next)
-			add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(getcwd(NULL, 0))));
+			add_env_node(head, new_env_node(ft_strdup(value), \
+			ft_strdup(getcwd(NULL, 0))));
 		tmp = tmp->next;
 	}
 }
@@ -90,7 +91,7 @@ int	ft_exit_input(char *s, int *status)
 	{
 		printf("minishell: exit: %s: numeric argument required\n", s);
 		*status = 2;
-		return (0);		
+		return (0);
 	}
 	*status = ft_atoi(s);
 	return (1);

@@ -6,18 +6,16 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:26 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:21:24 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:05:46 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
+	token = (t_token *)ft_malloc(sizeof(t_token), 1);
 	token->type = type;
 	token->value = ft_strdup(value);
 	token->next = NULL;

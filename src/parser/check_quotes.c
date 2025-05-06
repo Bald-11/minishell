@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:44 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:20:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:06:17 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 int	is_quote(char c)
 {

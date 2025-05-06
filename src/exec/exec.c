@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 17:50:25 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:01:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,38 +66,13 @@ void	exec_c(t_cmd *cmd, t_data *data)
 		close(cmd->out);
 	}
 	if (!cmd->args[0])
-		free_n_exit(cmd, 0);
+		free_n_exit(0);
 	if (execve(filename(cmd->args[0], data), cmd->args, data->envp) == -1)
 	{
 		if (errno == 2)
-			(print_error(cmd->args[0], 1), free_n_exit(cmd, 127));
+			(print_error(cmd->args[0], 1), free_n_exit(127));
 		else
-			(print_error(cmd->args[0], 2), free_n_exit(cmd, 126));
-	}
-}
-
-void	execute(t_cmd *cmd, t_data *data, int i)
-{
-	check_in(cmd, i);
-	check_out(cmd, i);
-	if (cmd->in != 0)
-		(dup2(cmd->in, 0), close(cmd->in));
-	if (cmd->out != 1)
-		(dup2(cmd->out, 1), close(cmd->out));
-	close_all_pipes(data);
-	if (!cmd->args[0])
-		free_n_exit(cmd, 0);
-	if (isbuiltin(cmd->args[0]))
-		(exec_b(cmd), exit(data->status));
-	else
-	{
-		if (execve(filename(cmd->args[0], data), cmd->args, data->envp) == -1)
-		{
-			if (errno == 2)
-				(print_error(cmd->args[0], 1), free_n_exit(cmd, 127));
-			else
-				(print_error(cmd->args[0], 2), free_n_exit(cmd, 126));
-		}
+			(print_error(cmd->args[0], 2), free_n_exit(126));
 	}
 }
 
@@ -107,15 +82,13 @@ void	multi_cmd_handle(t_cmd *cmd)
 	t_cmd *(tmp);
 	tmp = cmd;
 	i = 0;
-	cmd->data->pid = (pid_t *)malloc(cmd->data->cc * sizeof(pid_t));
-	if (!cmd->data->pid)
-		return (ft_printf("minishell: malloc error\n"), (void)0);
+	cmd->data->pid = (pid_t *)ft_malloc(cmd->data->cc * sizeof(pid_t), 1);
 	open_pipes(cmd);
 	while (i < cmd->data->cc)
 	{
 		cmd->data->pid[i] = fork();
 		if (cmd->data->pid[i] == -1)
-			free_n_exit(cmd, 1);
+			free_n_exit(1);
 		if (cmd->data->pid[i] == 0)
 			execute(tmp, cmd->data, i);
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:28:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 17:25:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:04:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define EXEC_H
 
 # include "shell.h"
+# include "utils.h"
+# include "env.h"
+# include "input.h"
+# include "parser.h"
+# include "exec.h"
 
 int		count_cmds(t_cmd *cmd);
 int		isbuiltin(char *cmd);
@@ -28,13 +33,16 @@ void	check_out(t_cmd *cmd, int index);
 void	open_pipes(t_cmd *cmd);
 void	close_all_pipes(t_data *data);
 void	set_exit_status(t_data *data);
-void	free_n_exit(t_cmd *cmd, int status);
+void	free_n_exit(int status);
 void	print_error(char *str, int err);
 void	exec_cmds(t_cmd *cmd);
 void	update_env(t_env **head, char *value);
 void	print_sorted_env(t_env *env);
 void	exit_shell(t_cmd *cmd);
 void	exec_b(t_cmd *cmd);
+void	execute(t_cmd *cmd, t_data *data, int i);
+void	heredoc_handle(t_data *data, int *tmp_fd, char *file);
+void	update_env_node(t_env *env, char *key, char *value);
 
 /* built-ins */
 

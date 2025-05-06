@@ -6,18 +6,16 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:52 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:20:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:01:24 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/env.h"
 
 t_env	*new_env_node(char *key, char *value)
 {
 	t_env	*new;
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
+	new = ft_malloc(sizeof(t_env), -42);
 	new->key = ft_strdup(key);
 	if (value)
 		new->value = ft_strdup(value);
@@ -59,10 +57,6 @@ void	parse_env_var(t_env **env, char *env_str)
 		value = ft_strdup(equals + 1);
 	}
 	new = new_env_node(key, value);
-	if (key)
-		free(key);
-	if (value)
-		free(value);
 	if (new)
 		add_env_node(env, new);
 }
@@ -81,21 +75,6 @@ t_env	*init_env(char **env)
 		i++;
 	}
 	return (env_list);
-}
-
-void	free_env(t_env *env)
-{
-	t_env	*temp;
-	while (env)
-	{
-		temp = env;
-		env = env->next;
-		if (temp->key)
-			free(temp->key);
-		if (temp->value)
-			free(temp->value);
-		free(temp);
-	}
 }
 
 void	print_env(t_env *env)

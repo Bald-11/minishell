@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:55 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 15:12:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:03:52 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define UTILS_H
 
 # include "shell.h"
+# include "utils.h"
+# include "env.h"
+# include "input.h"
+# include "parser.h"
+# include "exec.h"
 
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -39,13 +44,14 @@ char	*ft_getenv(char *var, t_env *env);
 char	*ft_strjoin_ex(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	**ft_envp(t_env *env);
+char	*ft_strcpy(char *dest, char *src);
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	ft_strtol(char *str);
 void	ft_strncat(char *dest, const char *src, size_t size);
 void	ft_strncpy(char *dest, const char *src, size_t size);
-void	free_arr(char **arr);
 void	ft_popnode(t_env **env, char *value);
+void	*ft_malloc(size_t size, int flag);
 
 size_t	ft_strlen(const char *str);
 

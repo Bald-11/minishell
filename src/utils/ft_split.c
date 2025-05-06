@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 09:46:53 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 09:47:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:28:50 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ static char	*fill_array(const char *s, char c)
 	i = 0;
 	while (s[len] && s[len] != c)
 		len++;
-	word = (char *)malloc((len + 1) * sizeof(char));
-	if (!word)
-		return (NULL);
+	word = (char *)ft_malloc((len + 1) * sizeof(char), 34);
 	while (i < len)
 	{
 		word[i] = s[i];
@@ -51,29 +49,14 @@ static char	*fill_array(const char *s, char c)
 	return (word);
 }
 
-static void	*free_array(char **arr, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	int		i;
 	char	**array_str;
 
 	i = 0;
-	array_str = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!array_str)
-		return (NULL);
+	array_str = (char **)ft_malloc(sizeof(char *) * \
+	(count_words(s, c) + 1), 19);
 	while (*s)
 	{
 		while (*s && *s == c)
@@ -81,8 +64,6 @@ char	**ft_split(char const *s, char c)
 		if (*s)
 		{
 			array_str[i] = fill_array(s, c);
-			if (!array_str[i])
-				return (free_array(array_str, i));
 			while (*s && *s != c)
 				s++;
 			i++;

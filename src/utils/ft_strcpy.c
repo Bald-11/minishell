@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 14:56:16 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 16:30:20 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/06 16:06:49 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/05/06 16:06:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/utils.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_strcpy(char *dest, char *src)
 {
-	char	*dup;
-	size_t	len;
-
-	len = ft_strlen(s1) + 1;
-	dup = (char *)ft_malloc(len, 1337);
-	ft_memcpy(dup, s1, len);
-	return (dup);
+	int (i);
+	i = -1;
+	while (src[++i])
+		dest[i] = src[i];
+	dest[i] = '\0';
+	return (dest);
 }

@@ -31,6 +31,8 @@ SRC = src/main.c \
 		src/utils/ft_strncpy.c \
 		src/utils/ft_env.c \
 		src/utils/ft_popnode.c \
+		src/utils/ft_malloc.c \
+		src/utils/ft_strcpy.c \
 		src/input/input.c \
 		src/parser/check_quotes.c \
 		src/parser/tokenizer.c \
@@ -40,10 +42,13 @@ SRC = src/main.c \
 		src/parser/syntax_check.c \
 		src/parser/parse_cmd.c	\
 		src/exec/exec.c \
+		src/exec/execs.c \
 		src/exec/exec_utils.c \
 		src/exec/error.c \
 		src/exec/redir.c \
+		src/exec/redir_utils.c \
 		src/exec/builtins.c \
+		src/exec/builtins_env.c \
 		src/exec/builtins_utils.c \
 		src/exec/builtins_utils2.c \
 

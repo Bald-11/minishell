@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:41 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:21:02 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:06:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 int	is_env_char(char c)
 {
@@ -61,7 +61,7 @@ static int	process_env_var(char *str, int *i, t_env *env, int *length)
 	key = ft_strndup(str + *i, key_len);
 	value = get_env_value(key, env);
 	*length += value ? ft_strlen(value) : 0;
-	free(key);
+	// free(key);
 	*i += key_len;
 	return (1);
 }
@@ -124,7 +124,7 @@ static void	handle_expansion(char *str, int *i, char *result, int *j, t_env *env
 	value = get_env_value(key, env);
 	if (value)
 		copy_env_value(result, j, value);
-	free(key);
+	// free(key);
 	*i += key_len;
 }
 
@@ -137,9 +137,7 @@ char	*expand_env_vars(char *str, t_env *env)
 
 	if (!str)
 		return (NULL);
-	result = (char *)malloc(sizeof(char) * (calculate_expanded_length(str, env) + 1));
-	if (!result)
-		return (NULL);
+	result = (char *)ft_malloc(sizeof(char) * (calculate_expanded_length(str, env) + 1), 1);
 	i = 0;
 	j = 0;
 	in_squote = 0;
@@ -175,7 +173,7 @@ void	expand_tokens(t_token *tokens, t_env *env)
 			expanded_value = expand_env_vars(current->value, env);
 			if (expanded_value)
 			{
-				free(current->value);
+				// free(current->value);
 				current->value = expanded_value;
 			}
 		}

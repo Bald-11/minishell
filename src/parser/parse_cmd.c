@@ -6,19 +6,17 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:38 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 10:58:18 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:06:09 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 t_cmd	*create_cmd(t_data *data)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
+	cmd = ft_malloc(sizeof(t_cmd), 3);
 	cmd->args = NULL;
 	cmd->in = 0;
 	cmd->out = 1;
@@ -47,9 +45,7 @@ t_redir	*create_redir(t_redir_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(t_redir));
-	if (!redir)
-		return (NULL);
+	redir = ft_malloc(sizeof(t_redir), 59);
 	redir->type = type;
 	redir->file = ft_strdup(file);
 	redir->quote = 0;
@@ -77,9 +73,7 @@ static char	**create_new_args(char **old_args, int size, char *arg_value)
 	char	**new_args;
 	int		i;
 
-	new_args = malloc(sizeof(char *) * (size + 2));
-	if (!new_args)
-		return (NULL);
+	new_args = ft_malloc(sizeof(char *) * (size + 2), 3);
 	i = 0;
 	while (i < size)
 	{
@@ -105,8 +99,8 @@ int	add_arg_to_cmd(t_cmd *cmd, char *arg_value)
 	new_args = create_new_args(cmd->args, size, arg_value);
 	if (!new_args)
 		return (0);
-	if (cmd->args)
-		free(cmd->args);
+	// if (cmd->args)
+	// 	free(cmd->args);
 	cmd->args = new_args;
 	return (1);
 }
@@ -294,7 +288,7 @@ t_cmd	*parse_commands(t_token *tokens, t_data *data)
 			current_cmd = NULL;
 		else if (!handle_token(current_cmd, &current))
 		{
-			free_all_cmds(cmd_list);
+			// free_all_cmds(cmd_list);
 			return (NULL);
 		}
 		current = current->next;

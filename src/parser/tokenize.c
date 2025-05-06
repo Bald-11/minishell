@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:29 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/03 15:21:19 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:05:56 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/shell.h"
+#include "../../inc/parser.h"
 
 static char	*get_token_type_string(t_token_type type)
 {
@@ -86,8 +86,8 @@ t_token	*tokenize(char *input)
 			new_token = create_token(get_token_type(token_value), token_value);
 			add_token(&head, new_token);
 		}
-		if (token_value)
-			free(token_value);
+		// if (token_value)
+		// 	free(token_value);
 	}
 	return (head);
 }

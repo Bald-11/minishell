@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:05:46 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/03 18:06:02 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:49:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*ft_strjoin_ex(char const *s1, char const *s2)
 		return (NULL);
 	s1_len = ft_strlen(s1) + 1;
 	s2_len = ft_strlen(s2);
-	dest = (char *)malloc((s1_len + s2_len) * (sizeof(char) + 1));
-	if (!dest)
-		return (NULL);
+	dest = (char *)ft_malloc((s1_len + s2_len) * (sizeof(char) + 1), 69);
 	i = 0;
 	while (s1[i] && i < s1_len - 1)
 	{

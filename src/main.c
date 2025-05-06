@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:55:59 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/05 17:55:39 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:07:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/shell.h"
+#include "../inc/env.h"
 
 void	init_data(t_data *data, char **envp)
 {
@@ -26,28 +26,24 @@ void	init_data(t_data *data, char **envp)
 	data->redir = NULL;
 }
 
-void	free_data(t_data *data)
+void	free_data(void)
 {
-	if (data->env)
-		free_env(data->env);
-	if (data->cmd)
-		free_all_cmds(data->cmd);
-	if (data->token)
-		free_tokens(data->token);
-	free(data);
+	ft_malloc(0, 0);
 	unlink("/tmp/minishell.txt");
+	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
+	int		exit_status;
+
 	(void)argc;
 	(void)argv;
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
+	data = ft_malloc(sizeof(t_data), 1337);
 	init_data(data, envp);
 	minishell(data);
-	free_data(data);
-	return (data->status);
+	exit_status = data->status;
+	free_data();
+	return ((unsigned char)exit_status);
 }

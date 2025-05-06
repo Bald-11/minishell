@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:19:37 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/05 15:26:05 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:09:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	ft_popnode(t_env **env, char *value)
 	if (!ft_strncmp(tmp->key, value, key_len))
 	{
 		*env = tmp->next;
-		free(tmp->key);
-		free(tmp->value);
 		return ;
 	}
 	while (tmp)
@@ -31,8 +29,6 @@ void	ft_popnode(t_env **env, char *value)
 		if (!ft_strncmp(tmp->key, value, key_len))
 		{
 			prev->next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
 			break ;
 		}
 		prev = tmp;
