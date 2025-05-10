@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:11:02 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 14:54:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:43:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ int	count_cmds(t_cmd *cmd)
 	return (count);
 }
 
-void	set_exit_status(t_data *data)
+void	set_exit_status(int *status)
 {
-	int (temp);
-	if (WIFEXITED(data->status))
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
 	{
-		temp = WEXITSTATUS(data->status);
-		data->status = temp;
-	}
-	else if (WIFSIGNALED(data->status))
-	{
-		temp = WTERMSIG(data->status);
-		data->status = temp;
+		*status = WTERMSIG(*status) + 128;
+		if (*status == 131)
+			ft_printf("Quit (core dumped)");
+		if (*status == SIGSEGV + 128)
+			ft_printf("Segmentation fault (core dumped)");
+		ft_printf("\n");
 	}
 }

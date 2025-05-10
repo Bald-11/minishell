@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:57:04 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:04:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:33:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define INPUT_H
 
 # include "shell.h"
+# include "signals.h"
 # include "utils.h"
 # include "env.h"
-# include "input.h"
 # include "parser.h"
 # include "exec.h"
 

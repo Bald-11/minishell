@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:26:48 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:11:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:34:48 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_sorted_env(t_env *env)
 
 void	exit_shell(t_cmd *cmd)
 {
-	long (exit_status);
+	int (exit_status);
 	exit_status = cmd->data->status;
 	ft_malloc(0, 0);
 	exit((unsigned char)exit_status);

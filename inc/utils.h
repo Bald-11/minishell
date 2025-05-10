@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:55 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:03:52 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:54:52 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define UTILS_H
 
 # include "shell.h"
-# include "utils.h"
 # include "env.h"
 # include "input.h"
 # include "parser.h"
 # include "exec.h"
+# include "signal.h"
 
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -45,6 +45,7 @@ char	*ft_strjoin_ex(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	**ft_envp(t_env *env);
 char	*ft_strcpy(char *dest, char *src);
+char	*ft_itoa(int n);
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	ft_strtol(char *str);

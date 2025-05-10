@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:57:01 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:04:02 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:05:51 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "utils.h"
 # include "env.h"
 # include "input.h"
-# include "parser.h"
 # include "exec.h"
 
 int				check_quotes(char *input);
@@ -34,7 +33,7 @@ int				is_env_char(char c);
 
 char			*extract_token_value(char *input, int *i);
 char			*extract_quoted_token(char *input, int *i, char quote_type);
-char			*expand_env_vars(char *str, t_env *env);
+char			*expand_env_vars(int *status, char *str, t_env *env);
 char			*get_env_value(char *key, t_env *env);
 
 void			add_token(t_token **head, t_token *new_token);
@@ -46,7 +45,7 @@ void			add_redir(t_redir **head, t_redir *new_redir);
 void			free_cmd(t_cmd *cmd);
 void			free_all_cmds(t_cmd *head);
 void			print_cmds(t_cmd *head);
-void			expand_tokens(t_token *tokens, t_env *env);
+void			expand_tokens(int *status, t_token *tokens, t_env *env);
 
 t_token			*tokenize(char *input);
 t_token			*create_token(t_token_type type, char *value);

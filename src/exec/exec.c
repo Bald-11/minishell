@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:01:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:26:11 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ static void	exec_b1_helper(t_cmd *cmd)
 void	exec_b1(t_cmd *cmd)
 {
 	pid_t (pid);
+	int (status);
 	pid = fork();
 	if (!pid)
 	{
+		setup_signals_child();
 		check_in(cmd, -1);
 		check_out(cmd, -1);
 		if (cmd->out != 1)
@@ -47,9 +49,11 @@ void	exec_b1(t_cmd *cmd)
 			ft_export(cmd);
 		exit(0);
 	}
-	waitpid(pid, &cmd->data->status, 0);
-	set_exit_status(cmd->data);
-	if (!cmd->data->status)
+	waitpid(pid, &status, 0);
+	set_exit_status(&status);
+	if (!status && ft_strcmp(cmd->args[0], "exit"))
+		cmd->data->status = status;
+	if (!status)
 		exec_b1_helper(cmd);
 }
 
@@ -99,7 +103,7 @@ void	multi_cmd_handle(t_cmd *cmd)
 	while (i < cmd->data->cc && waitpid(cmd->data->pid[i], \
 		&cmd->data->status, 0) > 0)
 		i++;
-	set_exit_status(cmd->data);
+	set_exit_status(&cmd->data->status);
 }
 
 void	exec_cmds(t_cmd *cmd)
@@ -108,19 +112,20 @@ void	exec_cmds(t_cmd *cmd)
 	cmd->data->cc = count_cmds(cmd);
 	if (cmd->data->cc == 1)
 	{
-		if (isbuiltin(cmd->args[0]))
+		if (cmd->args && isbuiltin(cmd->args[0]))
 			exec_b1(cmd);
 		else
 		{
 			pid = fork();
 			if (!pid)
 			{
+				setup_signals_child();
 				check_in(cmd, -1);
 				check_out(cmd, -1);
 				exec_c(cmd, cmd->data);
 			}
 			waitpid(pid, &cmd->data->status, 0);
-			set_exit_status(cmd->data);
+			set_exit_status(&cmd->data->status);
 		}
 	}
 	else

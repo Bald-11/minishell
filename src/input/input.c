@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:00:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:38:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*get_input(void)
 
 static void	cleanup_and_continue(t_data *data, char *input)
 {
-	// free_tokens(data->token);
 	data->token = NULL;
 	free(input);
 }
@@ -43,12 +42,10 @@ static int	process_input(t_data *data, char *input)
 		cleanup_and_continue(data, input);
 		return (0);
 	}
-	expand_tokens(data->token, data->env);
-	// print_tokens(data->token);
+	expand_tokens(&data->status, data->token, data->env);
 	data->cmd = parse_commands(data->token, data);
 	if (!data->cmd)
 	{
-		// printf("Error: Failed to parse commands\n");
 		cleanup_and_continue(data, input);
 		return (0);
 	}
@@ -61,15 +58,15 @@ void	minishell(t_data *data)
 
 	while (1)
 	{
+		setup_signals_interactive();
 		input = get_input();
 		if (!input)
 			break;
 		if (!process_input(data, input))
 			continue;
-		// print_cmds(data->cmd);
 		cleanup_and_continue(data, input);
+		setup_signals_exec();
 		exec_cmds(data->cmd);
-		// free_all_cmds(data->cmd);
 		data->cmd = NULL;
 	}
 }

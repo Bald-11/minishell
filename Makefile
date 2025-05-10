@@ -33,6 +33,7 @@ SRC = src/main.c \
 		src/utils/ft_popnode.c \
 		src/utils/ft_malloc.c \
 		src/utils/ft_strcpy.c \
+		src/utils/ft_itoa.c \
 		src/input/input.c \
 		src/parser/check_quotes.c \
 		src/parser/tokenizer.c \
@@ -51,6 +52,7 @@ SRC = src/main.c \
 		src/exec/builtins_env.c \
 		src/exec/builtins_utils.c \
 		src/exec/builtins_utils2.c \
+		src/exec/signals.c \
 
 OBJS = $(SRC:.c=.o)
 

@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 14:57:06 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/09 14:22:13 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/09 14:20:46 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/05/09 15:22:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
 # include "shell.h"
 # include "utils.h"
+# include "env.h"
 # include "input.h"
 # include "parser.h"
 # include "exec.h"
 
-t_env	*new_env_node(char *key, char *value);
-t_env	*init_env(char **env);
-
-void	add_env_node(t_env **env, t_env *new);
-void	parse_env_var(t_env **env, char *env_str);
-// void	free_env(t_env *env);
-void	print_env(t_env *env);
+void	handle_sigint(int sig);
+void	handle_sigint_exec(int sig);
+void	setup_signals_interactive(void);
+void	setup_signals_child(void);
+void	setup_signals_exec(void);
 
 #endif

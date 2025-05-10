@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:28:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 17:04:06 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:22:00 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define EXEC_H
 
 # include "shell.h"
+# include "signal.h"
 # include "utils.h"
 # include "env.h"
 # include "input.h"
 # include "parser.h"
-# include "exec.h"
 
 int		count_cmds(t_cmd *cmd);
 int		isbuiltin(char *cmd);
@@ -32,7 +32,7 @@ void	check_in(t_cmd *cmd, int index);
 void	check_out(t_cmd *cmd, int index);
 void	open_pipes(t_cmd *cmd);
 void	close_all_pipes(t_data *data);
-void	set_exit_status(t_data *data);
+void	set_exit_status(int *status);
 void	free_n_exit(int status);
 void	print_error(char *str, int err);
 void	exec_cmds(t_cmd *cmd);
