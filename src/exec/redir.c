@@ -6,11 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:47:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:08:53 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:26:55 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/shell.h"
+#include "../../inc/utils.h"
 
 char	*filename(char *cmd, t_data *data)
 {

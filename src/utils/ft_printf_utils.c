@@ -6,11 +6,12 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:23:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 17:29:39 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:31:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 int	ft_putchar_ft(char c)
 {

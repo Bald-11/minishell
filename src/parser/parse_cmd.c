@@ -6,11 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:38 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:06:09 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:38:15 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 t_cmd	*create_cmd(t_data *data)
 {

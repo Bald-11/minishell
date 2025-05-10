@@ -6,11 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:55:59 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:07:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:30:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/env.h"
+#include "../inc/utils.h"
+#include "../inc/shell.h"
+#include "../inc/input.h"
 
 void	init_data(t_data *data, char **envp)
 {

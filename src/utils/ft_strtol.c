@@ -6,11 +6,12 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:49:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/03 17:50:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:32:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 void	ft_strtol(char *str)
 {

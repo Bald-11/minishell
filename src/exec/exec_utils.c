@@ -6,11 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:11:02 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 17:43:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:25:12 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 void	open_pipes(t_cmd *cmd)
 {
@@ -68,8 +70,6 @@ void	set_exit_status(int *status)
 		*status = WTERMSIG(*status) + 128;
 		if (*status == 131)
 			ft_printf("Quit (core dumped)");
-		if (*status == SIGSEGV + 128)
-			ft_printf("Segmentation fault (core dumped)");
 		ft_printf("\n");
 	}
 }

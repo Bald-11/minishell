@@ -6,11 +6,12 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:35 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:06:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:37:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/shell.h"
 
 static int	is_redirection(t_token_type type)
 {

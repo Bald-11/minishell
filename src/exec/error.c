@@ -6,11 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:30:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:11:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:39:00 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 void	free_n_exit(int status)
 {

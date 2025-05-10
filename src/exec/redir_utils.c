@@ -6,10 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:08:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:09:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:40:51 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/shell.h"
+#include "../../inc/utils.h"
+#include "../../inc/parser.h"
 #include "../../inc/exec.h"
 
 void	append_char(char **str, char c)

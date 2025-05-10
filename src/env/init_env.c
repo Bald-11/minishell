@@ -6,15 +6,18 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:52 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/06 17:01:24 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:54:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/env.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 t_env	*new_env_node(char *key, char *value)
 {
 	t_env	*new;
+
 	new = ft_malloc(sizeof(t_env), -42);
 	new->key = ft_strdup(key);
 	if (value)
@@ -28,6 +31,7 @@ t_env	*new_env_node(char *key, char *value)
 void	add_env_node(t_env **env, t_env *new)
 {
 	t_env	*temp;
+
 	if (!*env)
 	{
 		*env = new;
@@ -45,6 +49,7 @@ void	parse_env_var(t_env **env, char *env_str)
 	char	*value;
 	char	*equals;
 	t_env	*new;
+
 	equals = ft_strchr(env_str, '=');
 	if (!equals)
 	{
@@ -65,6 +70,7 @@ t_env	*init_env(char **env)
 {
 	t_env	*env_list;
 	int		i;
+
 	env_list = NULL;
 	i = 0;
 	if (!env)
@@ -80,6 +86,7 @@ t_env	*init_env(char **env)
 void	print_env(t_env *env)
 {
 	t_env	*temp;
+
 	temp = env;
 	printf("--- Environment Variables ---\n");
 	while (temp)

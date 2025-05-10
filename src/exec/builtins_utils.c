@@ -6,11 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:13:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:10:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:23:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/shell.h"
+#include "../../inc/utils.h"
+#include "../../inc/env.h"
 
 void	update_env(t_env **head, char *value)
 {

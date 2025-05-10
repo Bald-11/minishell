@@ -6,15 +6,21 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/09 16:38:06 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:54:48 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/shell.h"
 #include "../../inc/input.h"
+#include "../../inc/signals.h"
+#include "../../inc/globals.h"
+#include "../../inc/parser.h"
+#include "../../inc/exec.h"
 
 char	*get_input(void)
 {
 	char	*input;
+
 	input = readline("minishell> ");
 	if (!input)
 	{
@@ -58,14 +64,19 @@ void	minishell(t_data *data)
 
 	while (1)
 	{
-		setup_signals_interactive();
+		signals_interactive();
 		input = get_input();
 		if (!input)
-			break;
+			break ;
+		if (g_sigint_received)
+		{
+			data->status = 130;
+			g_sigint_received = 0;
+		}
 		if (!process_input(data, input))
-			continue;
+			continue ;
 		cleanup_and_continue(data, input);
-		setup_signals_exec();
+		signals_exec();
 		exec_cmds(data->cmd);
 		data->cmd = NULL;
 	}

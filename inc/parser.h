@@ -6,18 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:57:01 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/09 16:05:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:15:09 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "shell.h"
-# include "utils.h"
-# include "env.h"
-# include "input.h"
-# include "exec.h"
+# include "types.h"
 
 int				check_quotes(char *input);
 int				is_quote(char c);

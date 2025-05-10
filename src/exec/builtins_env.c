@@ -6,11 +6,15 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:14:18 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:27:58 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:41:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/utils.h"
+#include "../../inc/env.h"
 #include "../../inc/exec.h"
+#include "../../inc/parser.h"
+#include "../../inc/shell.h"
 
 static void	string_check(t_cmd *cmd, int i, int j, int *f)
 {

@@ -6,11 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:26:48 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 13:34:48 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:41:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
 static void	print_envp(t_env **env_arr, int count)
 {

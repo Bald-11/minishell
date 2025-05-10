@@ -6,11 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:58:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/06 16:16:06 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:41:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/utils.h"
+#include "../../inc/env.h"
+#include "../../inc/shell.h"
 
 void	ft_cd(t_cmd *cmd, char *path)
 {

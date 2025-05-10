@@ -6,11 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 15:26:11 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:52:59 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/shell.h"
+#include "../../inc/utils.h"
+#include "../../inc/signals.h"
 
 static void	exec_b1_helper(t_cmd *cmd)
 {
@@ -31,14 +34,11 @@ void	exec_b1(t_cmd *cmd)
 	pid = fork();
 	if (!pid)
 	{
-		setup_signals_child();
+		signals_child();
 		check_in(cmd, -1);
 		check_out(cmd, -1);
 		if (cmd->out != 1)
-		{
-			dup2(cmd->out, 1);
-			close(cmd->out);
-		}
+			(dup2(cmd->out, 1), close(cmd->out));
 		if (!ft_strcmp(cmd->args[0], "echo"))
 			ft_echo(cmd);
 		else if (!ft_strcmp(cmd->args[0], "pwd"))
@@ -49,8 +49,7 @@ void	exec_b1(t_cmd *cmd)
 			ft_export(cmd);
 		exit(0);
 	}
-	waitpid(pid, &status, 0);
-	set_exit_status(&status);
+	(waitpid(pid, &status, 0), set_exit_status(&status));
 	if (!status && ft_strcmp(cmd->args[0], "exit"))
 		cmd->data->status = status;
 	if (!status)
@@ -119,7 +118,7 @@ void	exec_cmds(t_cmd *cmd)
 			pid = fork();
 			if (!pid)
 			{
-				setup_signals_child();
+				signals_child();
 				check_in(cmd, -1);
 				check_out(cmd, -1);
 				exec_c(cmd, cmd->data);

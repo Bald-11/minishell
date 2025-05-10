@@ -6,15 +6,17 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:00:37 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 15:21:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:38:51 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/shell.h"
+#include "../../inc/signals.h"
 
 void	execute(t_cmd *cmd, t_data *data, int i)
 {
-	setup_signals_child();
+	signals_child();
 	check_in(cmd, i);
 	check_out(cmd, i);
 	if (cmd->in != 0)

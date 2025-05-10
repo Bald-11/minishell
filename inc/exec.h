@@ -6,19 +6,14 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:28:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 15:22:00 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:14:23 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "shell.h"
-# include "signal.h"
-# include "utils.h"
-# include "env.h"
-# include "input.h"
-# include "parser.h"
+# include "types.h"
 
 int		count_cmds(t_cmd *cmd);
 int		isbuiltin(char *cmd);

@@ -6,24 +6,30 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:24:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 17:37:52 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 11:48:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/signals.h"
+#include "../../inc/globals.h"
+#include "../../inc/utils.h"
+#include "../../inc/shell.h"
 
-void handle_sigint(int sig)
+int		g_sigint_received = 0;
+
+void	handle_sigint(int sig)
 {
 	(void)sig;
+	g_sigint_received = 1;
 	ft_printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void setup_signals_interactive(void)
+void	signals_interactive(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
@@ -32,13 +38,13 @@ void setup_signals_interactive(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void setup_signals_exec(void)
+void	signals_exec(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void setup_signals_child(void)
+void	signals_child(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
