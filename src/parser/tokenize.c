@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:29 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:37:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:04:41 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_token	*tokenize(char *input)
 	t_token	*new_token;
 	char	*token_value;
 	int		i;
+
 	head = NULL;
 	i = 0;
 	reset_token_state();
@@ -79,7 +80,7 @@ t_token	*tokenize(char *input)
 		if (is_whitespace(input[i]))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		token_value = extract_token_value(input, &i);
 		if (token_value && *token_value)

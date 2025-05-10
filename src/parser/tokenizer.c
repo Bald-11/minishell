@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:26 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:35:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:04:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;
+
 	token = (t_token *)ft_malloc(sizeof(t_token), 1);
 	token->type = type;
 	token->value = ft_strdup(value);
@@ -27,6 +28,7 @@ t_token	*create_token(t_token_type type, char *value)
 void	add_token(t_token **head, t_token *new_token)
 {
 	t_token	*current;
+
 	if (!*head)
 	{
 		*head = new_token;
@@ -41,6 +43,7 @@ void	add_token(t_token **head, t_token *new_token)
 void	free_tokens(t_token *head)
 {
 	t_token	*tmp;
+
 	while (head)
 	{
 		tmp = head;
