@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 12:08:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:59:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	exec_b1(t_cmd *cmd)
 			ft_env(cmd->data->env);
 		else if (!ft_strcmp(cmd->args[0], "export") && !cmd->args[1])
 			ft_export(cmd);
+		ft_malloc(0, 0);
 		exit(0);
 	}
 	(waitpid(pid, &status, 0), set_exit_status(&status));

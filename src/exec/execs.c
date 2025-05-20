@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:00:37 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 12:09:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:00:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute(t_cmd *cmd, t_data *data, int i)
 	if (!cmd->args[0])
 		free_n_exit(0);
 	if (isbuiltin(cmd->args[0]))
-		(exec_b(cmd), exit(data->status));
+		(exec_b(cmd), free_n_exit(data->status));
 	else
 	{
 		if (execve(filename(cmd->args[0], data), cmd->args, data->envp) == -1)
