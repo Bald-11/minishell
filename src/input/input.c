@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:54:48 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:48:19 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ void	minishell(t_data *data)
 			data->status = 130;
 			g_sigint_received = 0;
 		}
-		if (!process_input(data, input))
+		if ((input && !input[0]) || !process_input(data, input))
+		{
+			cleanup_and_continue(data, input);
 			continue ;
-		cleanup_and_continue(data, input);
+		}
 		signals_exec();
 		exec_cmds(data->cmd);
+		cleanup_and_continue(data, input);
 		data->cmd = NULL;
 	}
 }
