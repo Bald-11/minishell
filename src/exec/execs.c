@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:00:37 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:38:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:09:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 void	execute(t_cmd *cmd, t_data *data, int i)
 {
 	signals_child();
-	check_in(cmd, i);
-	check_out(cmd, i);
+	(check_in(cmd, i), check_out(cmd, i));
 	if (cmd->in != 0)
 		(dup2(cmd->in, 0), close(cmd->in));
 	if (cmd->out != 1)

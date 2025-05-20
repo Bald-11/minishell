@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:24:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 12:02:28 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:09:12 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ void	handle_sigint(int sig)
 
 void	signals_interactive(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
