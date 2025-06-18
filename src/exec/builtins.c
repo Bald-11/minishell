@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:58:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:41:05 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:27:41 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,18 @@ void	update_env_node(t_env *env, char *key, char *value)
 	}
 }
 
-void	ft_exit(t_cmd *cmd)
+void	ft_exit(t_cmd *cmd, int f)
 {
 	int (i);
 	i = 0;
 	while (cmd->args[i])
 		i++;
-	ft_printf("exit\n");
+	if (!f)
+		ft_printf("exit\n");
 	if (cmd->args[1])
 	{
 		if (!ft_exit_input(cmd->args[1], &cmd->data->status))
-			exit_shell(cmd);
+			exit_shell(cmd, f);
 		if (i > 2)
 		{
 			ft_printf("minishell: exit: too many arguments\n");
@@ -106,5 +107,5 @@ void	ft_exit(t_cmd *cmd)
 			return ;
 		}
 	}
-	exit_shell(cmd);
+	exit_shell(cmd, f);
 }

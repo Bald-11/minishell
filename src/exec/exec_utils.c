@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:11:02 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:25:12 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:19:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	open_pipes(t_cmd *cmd)
 	{
 		cmd->data->pipe[i] = (int *)ft_malloc(sizeof(int) * 2, 2);
 		if (pipe(cmd->data->pipe[i]) == -1)
-			free_n_exit(1);
+			free_n_exit(1, cmd->data->input);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:47:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:26:55 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:19:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ void	check_in(t_cmd *cmd, int index)
 		{
 			if (tmp_fd != -1)
 				close(tmp_fd);
-			if (tmp->type == REDIR_IN)
-				tmp_fd = open(tmp->file, O_RDONLY);
-			else if (tmp->type == REDIR_HEREDOC)
-				heredoc_handle(cmd->data, &tmp_fd, tmp->file);
+			tmp_fd = open(tmp->file, O_RDONLY);
 			if (tmp_fd == -1)
-				(check_access(tmp->file), free_n_exit(1));
+				(check_access(tmp->file), free_n_exit(1, cmd->data->input));
 		}
 		tmp = tmp->next;
 	}
@@ -79,7 +76,7 @@ void	check_out(t_cmd *cmd, int index)
 			else if (tmp->type == REDIR_APPEND)
 				tmp_fd = open(tmp->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 			if (tmp_fd == -1)
-				(check_access(tmp->file), free_n_exit(1));
+				(check_access(tmp->file), free_n_exit(1, cmd->data->input));
 		}
 		tmp = tmp->next;
 	}

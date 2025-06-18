@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:24:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/20 10:09:12 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:05:50 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,21 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	g_sigint_received = 1;
+}
+
 void	signals_interactive(void)
 {
 	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signals_heredoc(void)
+{
+	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }
 

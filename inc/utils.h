@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:55 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:19:49 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:30:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "types.h"
 # include <stdlib.h>
 # include <stdarg.h>
+# include <limits.h>
 
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

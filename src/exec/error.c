@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:30:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:39:00 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:44:38 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include "../../inc/utils.h"
 #include "../../inc/shell.h"
 
-void	free_n_exit(int status)
+void	free_n_exit(int status, char *input)
 {
+	free(input);
 	ft_malloc(0, 0);
 	exit(status);
 }
@@ -35,6 +36,8 @@ void	print_error(char *str, int err)
 				ft_printf("permission denied");
 			else if (err == 3)
 				ft_printf("no such file or directory");
+			else if (err == 4)
+				ft_printf("cannot create temp file for here-document");
 			ft_printf(": %s\n", str);
 		}
 		else

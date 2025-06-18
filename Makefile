@@ -53,6 +53,7 @@ SRC = src/main.c \
 		src/exec/builtins_utils.c \
 		src/exec/builtins_utils2.c \
 		src/exec/signals.c \
+		src/exec/heredoc.c \
 
 OBJS = $(SRC:.c=.o)
 

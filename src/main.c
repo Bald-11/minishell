@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 14:55:59 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:30:37 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/01 14:55:59 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/06/18 18:21:34 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	init_data(t_data *data, char **envp)
 	data->cmd = NULL;
 	data->token = NULL;
 	data->redir = NULL;
+	data->input = NULL;
 }
 
 void	free_data(void)
 {
 	ft_malloc(0, 0);
-	unlink("/tmp/minishell.txt");
 	rl_clear_history();
 }
 
@@ -47,6 +47,6 @@ int	main(int argc, char **argv, char **envp)
 	init_data(data, envp);
 	minishell(data);
 	exit_status = data->status;
-	free_data();
+	free_data(); // unfinished
 	return ((unsigned char)exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:08:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:40:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:22:56 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	append_char(char **str, char c)
 	*str = new;
 }
 
-static int	mini_env_expand(t_data *data, char *input, int fd, int *j)
+/*static int	mini_env_expand(t_data *data, char *input, int fd, int *j)
 {
 	char *(tmp), *(value);
 	tmp = ft_strdup("");
@@ -67,20 +67,4 @@ static void	heredoc_env(t_data *data, char *input, int fd)
 			i++;
 		}
 	}
-}
-
-void	heredoc_handle(t_data *data, int *tmp_fd, char *file)
-{
-	char *(input);
-	*tmp_fd = open("/tmp/minishell.txt", O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	while (1)
-	{
-		input = readline("> ");
-		if (!ft_strcmp(input, file))
-			break ;
-		heredoc_env(data, input, *tmp_fd);
-		write(*tmp_fd, "\n", 1);
-	}
-	close(*tmp_fd);
-	*tmp_fd = open("/tmp/minishell.txt", O_RDONLY);
-}
+}*/

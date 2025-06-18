@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:13:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:23:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:23:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exec_b(t_cmd *cmd)
 	else if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(cmd->data->env);
 	else if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(cmd);
+		ft_exit(cmd, 1337);
 }
 
 int	ft_exit_input(char *s, int *status)

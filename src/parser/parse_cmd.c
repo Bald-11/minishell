@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:38 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:38:15 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:10:02 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,17 @@ t_redir	*create_redir(t_redir_type type, char *file)
 	t_redir	*redir;
 
 	redir = ft_malloc(sizeof(t_redir), 59);
+	if (type == REDIR_HEREDOC)
+	{
+		redir->dlimit = ft_strdup(file);
+		redir->file = NULL;
+	}
+	else
+	{
+		redir->dlimit = NULL;
+		redir->file = ft_strdup(file);
+	}
 	redir->type = type;
-	redir->file = ft_strdup(file);
 	redir->quote = 0;
 	redir->next = NULL;
 	return (redir);

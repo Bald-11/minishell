@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:26:48 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/20 11:30:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:27:55 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void	print_sorted_env(t_env *env)
 	print_envp(env_arr, count);
 }
 
-void	exit_shell(t_cmd *cmd)
+void	exit_shell(t_cmd *cmd, int f)
 {
 	int (exit_status);
 	exit_status = cmd->data->status;
+	if (!f)
+		unlink(cmd->data->hdoc_file);
 	ft_malloc(0, 0);
 	exit((unsigned char)exit_status);
 }

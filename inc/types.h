@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 10:58:44 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:08:31 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:09:50 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_redir
 {
 	t_redir_type		type;
 	char				*file;
+	char				*dlimit;
 	int					quote;
 	struct s_redir		*next;
 }	t_redir;
@@ -85,6 +86,8 @@ typedef struct s_data
 	int					cc;
 	int					heredoc_f;
 	int					**pipe;
+	char				*input;
+	char				*hdoc_file;
 	char				**envp;
 	pid_t				*pid;
 	t_env				*env;

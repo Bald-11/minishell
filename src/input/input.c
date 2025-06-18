@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:47 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/20 10:48:19 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:44:18 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,28 @@ char	*get_input(void)
 	return (input);
 }
 
-static void	cleanup_and_continue(t_data *data, char *input)
+static void	cleanup_and_continue(t_data *data)
 {
 	data->token = NULL;
-	free(input);
+	free(data->input);
+	data->input = NULL;
 }
 
-static int	process_input(t_data *data, char *input)
+static int	process_input(t_data *data)
 {
-	if (!check_quotes(input))
+	if (!check_quotes(data->input))
 		return (0);
-	data->token = tokenize(input);
+	data->token = tokenize(data->input);
 	if (!check_syntax(data->token))
 	{
-		cleanup_and_continue(data, input);
+		cleanup_and_continue(data);
 		return (0);
 	}
 	expand_tokens(&data->status, data->token, data->env);
 	data->cmd = parse_commands(data->token, data);
 	if (!data->cmd)
 	{
-		cleanup_and_continue(data, input);
+		cleanup_and_continue(data);
 		return (0);
 	}
 	return (1);
@@ -73,14 +74,16 @@ void	minishell(t_data *data)
 			data->status = 130;
 			g_sigint_received = 0;
 		}
-		if ((input && !input[0]) || !process_input(data, input))
+		data->input = input;
+		if ((input && !input[0]) || !process_input(data))
 		{
-			cleanup_and_continue(data, input);
+			cleanup_and_continue(data);
 			continue ;
 		}
-		signals_exec();
-		exec_cmds(data->cmd);
-		cleanup_and_continue(data, input);
+		signals_heredoc();
+		if (heredoc_check(data))
+			(signals_exec(), exec_cmds(data->cmd));
+		cleanup_and_continue(data);
 		data->cmd = NULL;
 	}
 }
