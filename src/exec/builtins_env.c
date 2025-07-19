@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:14:18 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/10 11:41:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:58:09 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	string_check(t_cmd *cmd, int i, int j, int *f)
 			}
 			else
 			{
-				print_error(cmd->args[i], 4);
+				print_error(cmd->args[i], 6);
 				cmd->data->status = 1;
 				*f = 1;
 			}
@@ -56,7 +56,7 @@ void	ft_export(t_cmd *cmd)
 			(cmd->args[i][0] >= 'a' && cmd->args[i][0] <= 'z') ||
 			(cmd->args[i][0] == '_')))
 		{
-			print_error(cmd->args[i], 4);
+			print_error(cmd->args[i], 6);
 			i++;
 			f = 1;
 			cmd->data->status = 1;

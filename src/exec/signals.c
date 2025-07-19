@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:24:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/18 20:05:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:59:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,24 @@ void	handle_sigint_heredoc(int sig)
 	g_sigint_received = 1;
 }
 
+void	handle_sigint_heredoc_child(int sig)
+{
+	(void)sig;
+	ft_malloc(0, 0);
+	exit(130);
+	// free_n_exit(sig + 128, data->input);
+}
+
 void	signals_interactive(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signals_heredoc_child(void)
+{
+	signal(SIGINT, handle_sigint_heredoc_child);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	signals_heredoc(void)

@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC = cc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
 
@@ -34,6 +34,7 @@ SRC = src/main.c \
 		src/utils/ft_malloc.c \
 		src/utils/ft_strcpy.c \
 		src/utils/ft_itoa.c \
+		src/utils/ft_bzero.c \
 		src/input/input.c \
 		src/parser/check_quotes.c \
 		src/parser/tokenizer.c \

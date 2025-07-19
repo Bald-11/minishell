@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:38:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/18 18:33:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:00:51 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,21 @@ void	exec_b1(t_cmd *cmd)
 
 void	exec_c(t_cmd *cmd, t_data *data)
 {
+	char	*cmd_file;
+
 	if (cmd->in != 0)
 		(dup2(cmd->in, 0), close(cmd->in));
 	if (cmd->out != 1)
 		(dup2(cmd->out, 1), close(cmd->out));
 	if (!cmd->args || !cmd->args[0])
 		free_n_exit(0, data->input);
-	if (execve(filename(cmd->args[0], data), cmd->args, data->envp) == -1)
+	cmd_file = filename(cmd->args[0], data);
+	if (execve(cmd_file, cmd->args, data->envp) == -1)
 	{
-		if (errno == 2)
-			(print_error(cmd->args[0], 1), free_n_exit(127, data->input));
+		if (errno == 13)
+			(print_error(cmd->args[0], 5), free_n_exit(126, data->input));
 		else
-			(print_error(cmd->args[0], 2), free_n_exit(126, data->input));
+			free_n_exit(0, data->input);
 	}
 }
 

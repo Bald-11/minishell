@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:32 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:36:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:29:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ static char	*extract_special_token(char *input, int *i)
 	return (ft_strndup(input + start, 1));
 }
 
+#include <stdio.h>
+
 char	*extract_token_value(char *input, int *i)
 {
 	int		len;
@@ -145,8 +147,10 @@ char	*extract_token_value(char *input, int *i)
 		(*i)++;
 	if (!input[*i])
 		return (NULL);
-	if (input[*i] == '\'' || input[*i] == '\"')
-		return (extract_quoted_token(input, i, input[*i]));
+	if (input[*i] == '$' && is_quote(input[*i + 1]))
+		(*i)++;
+	// if (input[*i] == '\'' || input[*i] == '\"')
+	// 	return (extract_quoted_token(input, i, input[*i]));
 	if (is_special_char(input[*i]))
 		return (extract_special_token(input, i));
 	result = ft_strdup("");

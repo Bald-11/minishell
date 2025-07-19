@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:30:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/18 14:44:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:04:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_error(char *str, int err)
 	else
 	{
 		ft_printf("minishell: ");
-		if (err >= 1 && err <= 3)
+		if (err >= 1 && err <= 4)
 		{
 			if (err == 1)
 				ft_printf("command not found");
@@ -42,7 +42,9 @@ void	print_error(char *str, int err)
 		}
 		else
 		{
-			if (err == 4)
+			if (err == 5)
+				ft_printf("%s: Is a directory\n", str);
+			else if (err == 6)
 				ft_printf("export: `%s': not a valid identifier\n", str);
 		}
 	}

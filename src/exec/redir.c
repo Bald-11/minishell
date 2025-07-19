@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:47:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/18 18:19:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:48:25 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 #include "../../inc/shell.h"
 #include "../../inc/utils.h"
 
+#include <sys/stat.h>
+
 char	*filename(char *cmd, t_data *data)
 {
 	char *(path), *(c_path);
 	char **(arr);
 	int (i);
+	struct stat b;
 	i = -1;
 	if (!ft_strchr_ex(cmd, '/'))
 		return (cmd);
@@ -29,10 +32,17 @@ char	*filename(char *cmd, t_data *data)
 	while (arr[++i])
 	{
 		c_path = ft_strjoin_ex(arr[i], cmd);
-		if (!access(c_path, F_OK))
-			return (c_path);
+		stat(c_path, &b);
+		if (!access(c_path, F_OK) && !S_ISDIR(b.st_mode))
+		{
+			if (!access(c_path, X_OK))
+				return (c_path);
+			else
+				(print_error(data->cmd->args[0], 2), free_n_exit(126, data->input));
+		}
 	}
-	return (cmd);
+	(print_error(data->cmd->args[0], 1), free_n_exit(127, data->input));
+	return (NULL);
 }
 
 void	check_in(t_cmd *cmd, int index)

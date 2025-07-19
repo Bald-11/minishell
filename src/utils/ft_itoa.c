@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:53:51 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/09 15:54:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:43:28 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	fill_string(char *str, long n, int len)
 {
-	str[len] = '\0';
+	ft_bzero(str, len + 1);
 	while (len)
 	{
 		len--;

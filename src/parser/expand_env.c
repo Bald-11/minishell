@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:41 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:37:27 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:13:26 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,11 @@ void	expand_tokens(int *status, t_token *tokens, t_env *env)
 	current = tokens;
 	while (current)
 	{
+		if (current->type == T_HEREDOC)
+		{
+			current = current->next->next;
+			continue;
+		}
 		if (current->value && ft_strchr(current->value, '$'))
 		{
 			expanded_value = expand_env_vars(status, current->value, env);

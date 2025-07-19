@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:55 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/06/15 19:30:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:47:58 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_strncat(char *dest, const char *src, size_t size);
 void	ft_strncpy(char *dest, const char *src, size_t size);
 void	ft_popnode(t_env **env, char *value);
 void	*ft_malloc(size_t size, int flag);
+void	ft_bzero(void *s, size_t n);
 
 size_t	ft_strlen(const char *str);
 

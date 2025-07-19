@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:57:01 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 11:15:09 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:42:40 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int				is_quote(char c);
 int				is_whitespace(char c);
 int				is_special_char(char c);
 int				is_flag(char *str);
-int				check_syntax(t_token *tokens);
+int				check_syntax(t_data *data);
 int				check_pipe_syntax(t_token *tokens);
-int				check_redirection_syntax(t_token *tokens);
+int				check_redirection_syntax(t_data *data, t_token *tokens);
 int				add_arg_to_cmd(t_cmd *cmd, char *arg_value);
 int				process_redirection(t_cmd *cmd, t_token **current);
 int				is_env_char(char c);

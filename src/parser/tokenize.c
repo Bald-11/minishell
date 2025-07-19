@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:29 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/05/10 12:04:41 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:49:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ t_token	*tokenize(char *input)
 			add_token(&head, new_token);
 		}
 	}
+	// print_tokens(head);
 	return (head);
 }
