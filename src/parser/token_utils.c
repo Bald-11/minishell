@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:32 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/07/17 18:29:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:17:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token_type	get_token_type(char *str)
 		return (T_EOF);
 	}
 	if (!*str)
-		return (T_EOF);
+		return (T_ARG);
 	else if (ft_strcmp(str, "|") == 0)
 		return (handle_pipe(&cmd_position, &after_pipe));
 	else if (is_special_char(str[0]))

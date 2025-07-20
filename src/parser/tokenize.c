@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:29 by mbarrah           #+#    #+#             */
-/*   Updated: 2025/07/17 18:49:49 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:14:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_token	*tokenize(char *input)
 			continue ;
 		}
 		token_value = extract_token_value(input, &i);
-		if (token_value && *token_value)
+		if (token_value)
 		{
 			new_token = create_token(get_token_type(token_value), token_value);
 			add_token(&head, new_token);

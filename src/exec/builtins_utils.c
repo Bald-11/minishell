@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:13:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/16 14:23:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:37:33 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,33 @@
 void	update_env(t_env **head, char *value)
 {
 	t_env *(tmp);
+	char	*cwd;
+	
 	tmp = *head;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return ;
 	if (!tmp)
 	{
-		add_env_node(head, new_env_node(ft_strdup(value), \
-		ft_strdup(getcwd(NULL, 0))));
+		add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(cwd)));
+		free(cwd);
 		return ;
 	}
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, value))
 		{
-			tmp->value = ft_strdup(getcwd(NULL, 0));
+			tmp->value = ft_strdup(cwd);
 			break ;
 		}
 		else if (!tmp->next)
-			add_env_node(head, new_env_node(ft_strdup(value), \
-			ft_strdup(getcwd(NULL, 0))));
+		{
+			add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(cwd)));
+			break ;
+		}
 		tmp = tmp->next;
 	}
+	free(cwd);
 }
 
 int	is_valid_flag(char *s)

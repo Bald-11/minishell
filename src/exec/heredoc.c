@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:41:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/20 10:15:48 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 10:56:42 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	heredoc_handle(t_data *data, char *file, char *dlimit)
 {
 	char *(input);
 	int fd = open(file, O_WRONLY);
+	if (!fd)
+		return ;
 	while (1)
 	{
 		input = readline("> ");
@@ -79,7 +81,7 @@ int	heredoc_check(t_data *data)
 				}
 				waitpid(pid, &status, 0);
 				if (!heredoc_sig_status(re_tmp->dlimit, status))
-					return (0);
+					return (heredoc_cleanup(data->cmd), 0);
 			}
 			re_tmp = re_tmp->next;
 		}

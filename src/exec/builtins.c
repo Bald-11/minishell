@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:58:17 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/06/16 14:27:41 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:23:39 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ void	ft_cd(t_cmd *cmd, char *path)
 			return ;
 		}
 	}
-	update_env(&cmd->data->env, "OLDPWD");
-	cmd->data->status = 0;
-	if (chdir(path) == -1)
+	if (path[0] && chdir(path) == -1)
 	{
 		ft_printf("minishell: cd: %s: No such file or directory\n", path);
 		cmd->data->status = 1;
+		return ;
 	}
+	update_env(&cmd->data->env, "OLDPWD");
 	update_env(&cmd->data->env, "PWD");
+	cmd->data->status = 0;
 	cmd->data->envp = ft_envp(cmd->data->env);
 }
 
