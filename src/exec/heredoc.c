@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:41:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/19 18:01:20 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 10:15:48 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	heredoc_sig_status(char *dlimit, int status)
 {
 	if (WIFSIGNALED(status))
 	{
-		ft_printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_redisplay();
 		return (0);
 	}
 	if (WIFEXITED(status))
@@ -52,7 +52,7 @@ int	heredoc_sig_status(char *dlimit, int status)
 		if (WEXITSTATUS(status) == 130)
 			return (0);
 		else if (WEXITSTATUS(status) == 131)
-			return(ft_printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", dlimit), 0);
+			return(ft_printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", dlimit), 1);
 	}	
 	return (1);
 }
@@ -74,7 +74,6 @@ int	heredoc_check(t_data *data)
 				pid = fork();
 				if (!pid)
 				{
-					// signals_child();
 					signals_heredoc_child();
 					heredoc_handle(data, re_tmp->file, re_tmp->dlimit);
 				}

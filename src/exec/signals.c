@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:24:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:59:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 10:09:00 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	g_sigint_received = 1;
+	ft_printf("^C\n");
 }
 
 void	handle_sigint_heredoc_child(int sig)

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:47:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/19 16:48:25 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 09:53:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ char	*filename(char *cmd, t_data *data)
 			if (!access(c_path, X_OK))
 				return (c_path);
 			else
-				(print_error(data->cmd->args[0], 2), free_n_exit(126, data->input));
+				(print_error(cmd, 2), free_n_exit(126, data->input));
 		}
 	}
-	(print_error(data->cmd->args[0], 1), free_n_exit(127, data->input));
+	(print_error(cmd, 1), free_n_exit(127, data->input));
 	return (NULL);
 }
 

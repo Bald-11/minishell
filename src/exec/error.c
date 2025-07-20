@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:30:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:04:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 09:49:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,35 @@ void	free_n_exit(int status, char *input)
 
 void	print_error(char *str, int err)
 {
+	char *error;
+
 	if (err == 0)
 		perror(str);
 	else
 	{
-		ft_printf("minishell: ");
+		error = ft_strdup("minishell: ");
 		if (err >= 1 && err <= 4)
 		{
 			if (err == 1)
-				ft_printf("command not found");
+				error = ft_strjoin(error, "command not found");
 			else if (err == 2)
-				ft_printf("permission denied");
+				error = ft_strjoin(error, "permission denied");
 			else if (err == 3)
-				ft_printf("no such file or directory");
+				error = ft_strjoin(error, "no such file or directory");
 			else if (err == 4)
-				ft_printf("cannot create temp file for here-document");
-			ft_printf(": %s\n", str);
+				error = ft_strjoin(error, "cannot create temp file for here-document");
+			error = ft_strjoin(error, ft_strjoin(": ", ft_strjoin(str, "\n")));
 		}
 		else
 		{
 			if (err == 5)
-				ft_printf("%s: Is a directory\n", str);
+				error = ft_strjoin(error, ft_strjoin(str, ": Is a directory\n"));
 			else if (err == 6)
-				ft_printf("export: `%s': not a valid identifier\n", str);
+			{
+				error = ft_strdup("export: `");
+				error = ft_strjoin(error, ft_strjoin(str, "': not a valid identifier\n"));
+			}
 		}
+		write(2, error, ft_strlen(error));
 	}
 }
