@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:41:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/20 10:56:42 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:53:25 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ void	heredoc_cleanup(t_cmd *cmd)
 		while (redir_tmp)
 		{
 			if (redir_tmp->type == REDIR_HEREDOC)
-				unlink(redir_tmp->file);
+			{
+				if (redir_tmp->file && !access(redir_tmp->file, F_OK))
+					unlink(redir_tmp->file);
+			}
 			redir_tmp = redir_tmp->next;
 		}
 		cmd_tmp = cmd_tmp->next;
