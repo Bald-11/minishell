@@ -6,11 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:14:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:28:19 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:02:26 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/utils.h"
+#include "../../include/minishell.h"
 
 static void	free_all(t_mem *mem)
 {

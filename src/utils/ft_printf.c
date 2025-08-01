@@ -6,102 +6,86 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:39:39 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/05/03 16:20:42 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:10:30 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/utils.h"
+#include "../../include/minishell.h"
 
-static int	ft_putnbr_pointer_ft(unsigned long n)
+static char	*append_character(char *string, char c)
 {
-	char	*base;
-	int		count;
+	char	*str;
+	int		len;
+	int		i;
 
-	count = 0;
-	base = "0123456789abcdef";
-	if (n >= 16)
-		count = ft_putnbr_pointer_ft(n / 16);
-	count += ft_putchar_ft(base[n % 16]);
-	return (count);
-}
-
-static int	ft_putnbr_hexa_ft(unsigned int n)
-{
-	char	*base;
-	int		count;
-
-	count = 0;
-	base = "0123456789ABCDEF";
-	if (n >= 16)
-		count = ft_putnbr_hexa_ft(n / 16);
-	count += ft_putchar_ft(base[n % 16]);
-	return (count);
-}
-
-static int	case_handling(char c, long n)
-{
-	int	count;
-
-	count = 0;
-	if (c == 'd' || c == 'i')
-		count += ft_putnbr_ft((int)n);
-	else if (c == 'c')
-		count += ft_putchar_ft((char)n);
-	else if (c == 'u')
-		count += ft_putnbr_unsigned_ft((unsigned int)n);
-	else if (c == 'X')
-		count += ft_putnbr_hexa_ft((unsigned int)n);
-	else if (c == 'x')
-		count += ft_putnbr_hexa_c_ft((unsigned int)n);
-	else if (c == 'p')
+	if (!string)
 	{
-		if (n == 0)
-			return (ft_putstr_ft("(nil)"));
-		count += ft_putstr_ft("0x");
-		count += ft_putnbr_pointer_ft((unsigned long)n);
-	}		
-	return (count);
+		string = ft_strdup(&c);
+		return (string);
+	}
+	len = ft_strlen(string);
+	str = ft_malloc(len + 2, 1337);
+	i = -1;
+	while (string[++i])
+		str[i] = string[i];
+	str[i] = c;
+	str[i + 1] = string[i];
+	return (str);
 }
 
-static int	check(va_list args, const char *s)
+static void	ft_putchar_ft(char c, int flag)
 {
-	int		count;
+	static char	*string = NULL;
+
+	string = append_character(string, c);
+	if (!flag)
+	{
+		write(2, string, ft_strlen(string));
+		string = NULL;
+	}
+}
+
+static void	ft_putstr_ft(char *s)
+{
+	int	i;
+
+	i = -1;
+	if (s == NULL)
+		return (ft_putstr_ft("(null)"));
+	while (s[++i])
+		ft_putchar_ft(s[i], 1337);
+}
+
+static void	check(va_list args, const char *s)
+{
 	int		i;
 	char	t;
 
-	count = 0;
 	i = 0;
 	while (s[i])
 	{
 		if (s[i] == '%')
 		{
 			t = s[i + 1];
-			if (t == 'd' || t == 'i' || t == 'c' || t == 'u'
-				|| t == 'x' || t == 'X' || t == 'p')
-				count += case_handling(t, va_arg(args, long));
-			else if (t == 's')
-				count += ft_putstr_ft(va_arg(args, char *));
-			else if (t == '%')
-				count += ft_putchar_ft('%');
+			if (t == 's')
+				ft_putstr_ft(va_arg(args, char *));
 			i++;
 		}
+		else if (!s[i + 1])
+			ft_putchar_ft(s[i], 0);
 		else
-			count += ft_putchar_ft(s[i]);
+			ft_putchar_ft(s[i], 1337);
 		i++;
 	}
-	return (count);
 }
 
-int	ft_printf(const char *s, ...)
+void	ft_printf(const char *s, ...)
 {
-	va_list		args;
-	int			count;
+	va_list	args;
 
 	if (!s)
-		return (-1);
-	count = 0;
+		return ;
 	va_start(args, s);
-	count += check(args, s);
+	check(args, s);
 	va_end(args);
-	return (count);
 }

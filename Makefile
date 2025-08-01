@@ -1,78 +1,83 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
+#    Updated: 2025/08/01 05:50:12 by mtarza           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-RM = rm -f
+CC = cc -g
+CFLAGS = -Wall -Wextra -Werror
+INCLUDES = -I./include -I./libft
+LIBS = -lreadline -I/usr/include/readline -L./libft -lft
 
-# READLINE
-READLINE_LIB = -lreadline
-READLINE_INC = -I/usr/include/readline
+SRC_DIR = src
+OBJ_DIR = obj
+LIBFT_DIR = libft
 
-# SRCS & OBJS
-SRC = src/main.c \
-		src/env/init_env.c \
-		src/utils/ft_strchr.c \
-		src/utils/ft_strchr_ex.c \
-		src/utils/ft_strdup.c \
-		src/utils/ft_strlen.c \
-		src/utils/ft_strndup.c \
-		src/utils/ft_memcpy.c \
-		src/utils/ft_strcmp.c \
-		src/utils/ft_strncmp.c \
-		src/utils/ft_strjoin.c \
-		src/utils/ft_strjoin_ex.c \
-		src/utils/ft_split.c \
-		src/utils/ft_atoi.c \
-		src/utils/ft_printf.c \
-		src/utils/ft_printf_utils.c \
-		src/utils/ft_strncat.c \
-		src/utils/ft_strtol.c \
-		src/utils/ft_getenv.c \
-		src/utils/ft_strncpy.c \
-		src/utils/ft_env.c \
-		src/utils/ft_popnode.c \
-		src/utils/ft_malloc.c \
-		src/utils/ft_strcpy.c \
-		src/utils/ft_itoa.c \
-		src/utils/ft_bzero.c \
-		src/input/input.c \
-		src/parser/check_quotes.c \
-		src/parser/tokenizer.c \
-		src/parser/token_utils.c \
-		src/parser/tokenize.c \
-		src/parser/expand_env.c \
-		src/parser/syntax_check.c \
-		src/parser/parse_cmd.c	\
-		src/exec/exec.c \
-		src/exec/execs.c \
-		src/exec/exec_utils.c \
-		src/exec/error.c \
-		src/exec/redir.c \
-		src/exec/redir_utils.c \
-		src/exec/builtins.c \
-		src/exec/builtins_env.c \
-		src/exec/builtins_utils.c \
-		src/exec/builtins_utils2.c \
-		src/exec/signals.c \
-		src/exec/heredoc.c \
+MAIN_SRCS = src/main.c
 
-OBJS = $(SRC:.c=.o)
+BUILTIN_SRCS = builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
+			   builtins/export.c builtins/export_utils.c builtins/pwd.c builtins/unset.c
 
-# RULES
-all: $(NAME)
+EXECUTOR_SRCS = executor/execute_ast.c executor/execute_builtin.c \
+				executor/execute_command.c executor/execute_utils.c executor/redirections.c
+
+LEXER_SRCS = lexer/tokenize.c lexer/token_utils.c
+
+PARSER_SRCS = parser/input.c parser/parse_command.c parser/parse_pipeline.c \
+			  parser/parse_redirections.c parser/syntax_validation.c
+
+UTILS_SRCS = utils/ft_malloc.c utils/ft_printf.c utils/ft_utils.c \
+			utils/memory_utils.c utils/string_utils.c
+
+ENV_SRCS = env/env_init.c env/env_utils.c
+
+SIGNALS_SRCS = signals/signal_handler.c signals/signal_setup.c
+
+HEREDOC_SRCS = heredoc/heredoc.c heredoc/heredoc_utils.c
+EXPO_SRCS = expo/expansion_array.c expo/expansion_quote_utils.c expo/expansion_string.c \
+			expo/expansion_var_utils.c expo/expansion_word_utils.c expo/expo_utils.c expo/expo_v2.c
+			
+SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(LEXER_SRCS) \
+	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS) $(EXPO_SRCS)
+
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+
+LIBFT = $(LIBFT_DIR)/libft.a
+
+all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(READLINE_LIB) -o $(NAME)
+	$(CC) $(OBJS) $(LIBS) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(READLINE_INC) -c $< -o $@
+# Rule to compile source files inside src/ folder (like src/main.c, src/executor/...)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Rule to compile source files outside src/ folder (builtins, utils, env, etc.)
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
 
 clean:
-	$(RM) $(OBJS)
+	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
+	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
